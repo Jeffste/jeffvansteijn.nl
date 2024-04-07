@@ -3,35 +3,44 @@
     
     <title>Jeff van Steijn</title>
     <description></description>
-    <link>https://jeffvansteijn.nl/</link>
+    <link>http://localhost:1313/</link>
     
     <language>en</language>
     <copyright>Copyright 2024, Calvin Tran</copyright>
     <lastBuildDate>Sun, 07 Apr 2024 23:01:46 +0200</lastBuildDate>
     <generator>Hugo - gohugo.io</generator>
     <docs>http://cyber.harvard.edu/rss/rss.html</docs>
-    <atom:link href="https://jeffvansteijn.nl//atom.xml" rel="self" type="application/atom+xml"/>
+    <atom:link href="http://localhost:1313//atom.xml" rel="self" type="application/atom+xml"/>
     
     
     <item>
       <title>Second_post</title>
-      <link>https://jeffvansteijn.nl/posts/second_post/</link>
+      <link>http://localhost:1313/posts/second_post/</link>
       <description>&lt;h1 id=&#34;this-is-a-second-page&#34;&gt;This is a second page&lt;/h1&gt;
 </description>
       <author></author>
-      <guid>https://jeffvansteijn.nl/posts/second_post/</guid>
+      <guid>http://localhost:1313/posts/second_post/</guid>
       <pubDate>Sun, 07 Apr 2024 23:01:46 +0200</pubDate>
     </item>
     
     <item>
       <title>How to build this website</title>
-      <link>https://jeffvansteijn.nl/posts/first_post/</link>
+      <link>http://localhost:1313/posts/first_post/</link>
       <description>&lt;h1 id=&#34;soon&#34;&gt;Soon&lt;/h1&gt;
 &lt;p&gt;Content&lt;/p&gt;
+&lt;p&gt;&lt;img
+  src=&#34;http://localhost:1313/car.jpg&#34;
+  alt=&#34;Porsche&#34;
+  loading=&#34;lazy&#34;
+  decoding=&#34;async&#34;
+  class=&#34;full-width&#34;
+/&gt;
+
+&lt;/p&gt;
 &lt;h2 id=&#34;bye&#34;&gt;Bye&lt;/h2&gt;
 </description>
       <author></author>
-      <guid>https://jeffvansteijn.nl/posts/first_post/</guid>
+      <guid>http://localhost:1313/posts/first_post/</guid>
       <pubDate>Fri, 05 Apr 2024 22:19:26 +0200</pubDate>
     </item>
     
