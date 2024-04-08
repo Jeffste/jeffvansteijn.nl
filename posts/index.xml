@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Jeff van Steijn</title>
-    <link>http://localhost:1313/posts/</link>
+    <link>http://localhost:62890/posts/</link>
     <description>Recent content in Posts on Jeff van Steijn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 07 Apr 2024 23:01:46 +0200</lastBuildDate>
-    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:62890/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Second_post</title>
-      <link>http://localhost:1313/posts/second_post/</link>
+      <link>http://localhost:62890/posts/second_post/</link>
       <pubDate>Sun, 07 Apr 2024 23:01:46 +0200</pubDate>
-      <guid>http://localhost:1313/posts/second_post/</guid>
+      <guid>http://localhost:62890/posts/second_post/</guid>
       <description>This is a second page </description>
     </item>
     <item>
       <title>How to build this website</title>
-      <link>http://localhost:1313/posts/first_post/</link>
+      <link>http://localhost:62890/posts/first_post/</link>
       <pubDate>Fri, 05 Apr 2024 22:19:26 +0200</pubDate>
-      <guid>http://localhost:1313/posts/first_post/</guid>
+      <guid>http://localhost:62890/posts/first_post/</guid>
       <description>Soon Content&#xA;Bye </description>
     </item>
   </channel>
