@@ -1,0 +1,16 @@
+baseURL = 'https://jeffvansteijn.nl/'
+languageCode = 'en-us'
+title = 'Jeff van Steijn'
+theme = 'yaz'
+
+[menu]
+  [[menu.main]]
+    identifier = "bikes"
+    name = "Bikes"
+    url = "/bikes/"
+    weight = "-110"
+  [[menu.main]]
+    identifier = "posts"
+    name = "Post"
+    url = "/posts/"
+    weight = -200
