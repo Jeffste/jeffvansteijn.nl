@@ -3,19 +3,19 @@
     
     <title>Jeff van Steijn</title>
     <description></description>
-    <link>http://localhost:1313/</link>
+    <link>https://jeffvansteijn.nl/</link>
     
     <language>en</language>
     <copyright>Copyright 2024, Calvin Tran</copyright>
     <lastBuildDate>Tue, 09 Apr 2024 20:27:35 +0200</lastBuildDate>
     <generator>Hugo - gohugo.io</generator>
     <docs>http://cyber.harvard.edu/rss/rss.html</docs>
-    <atom:link href="http://localhost:1313//atom.xml" rel="self" type="application/atom+xml"/>
+    <atom:link href="https://jeffvansteijn.nl//atom.xml" rel="self" type="application/atom+xml"/>
     
     
     <item>
       <title>Why I made this website</title>
-      <link>http://localhost:1313/posts/my-first-post/</link>
+      <link>https://jeffvansteijn.nl/posts/my-first-post/</link>
       <description>&lt;p&gt;It serves as a space where I can introduce myself, showcase my favorite work, and as sort of a personal note-taking/journal. Let me begin with the introduction; perhaps I&amp;rsquo;ll add some showcases later. When you land on the page, you might be surprised by its simple and minimalistic approach. Let me explain.&lt;/p&gt;
 &lt;p&gt;As most of the designers know, working on your portfolio can be a hell of a job! The ever-changing digital trends, never being satisfied, and often limited front-end skills. All this influenced my decision to opt for this minimalistic yet timeless design. (I might occasionally spice it up, so don’t expect anything too fancy.)&lt;/p&gt;
 &lt;h2 id=&#34;audience&#34;&gt;Audience&lt;/h2&gt;
@@ -24,7 +24,7 @@
 &lt;p&gt;Yes, I&amp;rsquo;ve added a blog. Here, I will attempt to write about various topics, mainly focused on design. Now, do not expect groundbreaking articles; rather, it&amp;rsquo;s my perspective on random subjects within the field. As I will always add new content, I may change your mind about older posts, but hey, take it with a grain of salt.&lt;/p&gt;
 </description>
       <author></author>
-      <guid>http://localhost:1313/posts/my-first-post/</guid>
+      <guid>https://jeffvansteijn.nl/posts/my-first-post/</guid>
       <pubDate>Tue, 09 Apr 2024 20:20:11 +0200</pubDate>
     </item>
     
