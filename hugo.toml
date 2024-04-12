@@ -5,9 +5,9 @@ theme = 'yaz'
 
 [menu]
   [[menu.main]]
-    identifier = "bikes"
-    name = "Bikes"
-    url = "/bikes/"
+    identifier = "about"
+    name = "About"
+    url = "/about/"
     weight = "-110"
   [[menu.main]]
     identifier = "posts"
