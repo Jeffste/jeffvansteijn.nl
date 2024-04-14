@@ -9,6 +9,11 @@ theme = 'yaz'
     name = "About"
     url = "/about/"
     weight = "-110"
+      [[menu.main]]
+    identifier = "bikes"
+    name = "Bikes"
+    url = "/bikes/"
+    weight = "-100"
   [[menu.main]]
     identifier = "posts"
     name = "Post"

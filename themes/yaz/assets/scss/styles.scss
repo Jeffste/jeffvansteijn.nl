@@ -11,6 +11,7 @@ body {
     padding: 2rem;
     color: #fff;
     background-color: #1B1B1B;
+
 }
 
 
@@ -53,13 +54,10 @@ header {
     line-height: 2;
     padding-bottom: 1.5rem;
     color: white;
-    background-color: #1B1B1B99;
+    background-color: #1B1B1B;
 //    backdrop-filter: blur(16px);
-    
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    
-    
+//    backdrop-filter: blur(16px);
+//    -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid #ffffff20;
 //    backdrop-filter: invert(80%);
 }
@@ -236,6 +234,7 @@ hr {
 img {
     max-width: 100%;
     height: auto;
+    border-radius: 3px;
 }
 
 
