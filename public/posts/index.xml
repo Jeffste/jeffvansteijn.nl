@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Jeff</title>
+    <link>https://jeffvansteijn.nl/posts/</link>
+    <description>Recent content in Posts on Jeff</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 09 Apr 2024 20:20:11 +0200</lastBuildDate>
+    <atom:link href="https://jeffvansteijn.nl/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Why I made this website</title>
+      <link>https://jeffvansteijn.nl/posts/my-first-post/</link>
+      <pubDate>Tue, 09 Apr 2024 20:20:11 +0200</pubDate>
+      <guid>https://jeffvansteijn.nl/posts/my-first-post/</guid>
+      <description>It serves as a space where I can introduce myself, showcase my favorite work, and as sort of a personal note-taking/journal. Let me begin with the introduction; perhaps I&amp;rsquo;ll add some showcases later. When you land on the page, you might be surprised by its simple and minimalistic approach. Let me explain.&#xA;As most of the designers know, working on your portfolio can be a hell of a job! The ever-changing digital trends, never being satisfied, and often limited front-end skills.</description>
+    </item>
+  </channel>
+</rss>
