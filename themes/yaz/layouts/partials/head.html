@@ -84,6 +84,17 @@
       "keywords" : [ {{ range $index, $tag := .Params.tags }}{{ if $index }}, {{ end }}"{{ $tag }}" {{ end }}]
   }
   </script>
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        document.documentElement.className = savedTheme;
+      } else {
+        document.documentElement.className = 'light'; // Default theme
+      }
+    })();
+  </script>
   {{ end }}
+
 
   </head>

@@ -6,6 +6,7 @@
   <main id="main">
   <div class="content">
     {{ partial "header.html" . }}
+    <p>A collection (planned) of posts on product design, design systems, sports, cycling, and bike-tech. You'll find brain dumps, deep dives, and practical how-to's, all driven by my enthusiasm for these subjects.</p></br>
     <section>
       {{ .Content }}
       <ul reversed class="list">
@@ -18,6 +19,7 @@
         {{ end }}
       </ul>
     </section>
+          {{ partial "footer.html" . }}
   </div>
 </main>
 </body>

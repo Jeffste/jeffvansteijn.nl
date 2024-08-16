@@ -1,14 +1,10 @@
 baseURL = 'https://jeffvansteijn.nl/'
 languageCode = 'en-us'
-title = 'Jeff van Steijn'
+title = 'Jeff'
 theme = 'yaz'
 
 [menu]
-  [[menu.main]]
-    identifier = "about"
-    name = "About"
-    url = "/about/"
-    weight = "-110"
+
       [[menu.main]]
     identifier = "bikes"
     name = "Bikes"
@@ -19,3 +15,17 @@ theme = 'yaz'
     name = "Post"
     url = "/posts/"
     weight = -200
+    
+    
+    [footer]
+  [[menu.footer]]
+    identifier = "colophon"
+    name = "colophon"
+    url = "/colophon/"
+    weight = "10"
+    
+    
+    [markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true

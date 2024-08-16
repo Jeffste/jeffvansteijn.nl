@@ -1,4 +1,20 @@
+{{ partial "themetoggle.html" . }}
+<footer class="footer">
 
-<footer>
-<p>© {{ dateFormat "2022" now }}</p>
+    <!-- <p style="padding: 0;margin: 0;"> -->
+<p>©2024 Made by Jeff. All Rights Reserved.</p>
+<!-- </p> -->
+<!--
+<ul style="padding: 0;margin: 0;">
+  {{ $currentPage := . }}
+  {{ range .Site.Menus.footer }}
+  <li class="{{ if $currentPage.HasMenuCurrent "main" . }}active{{ end }}">
+    <a href="{{ .URL }}"><span>{{ .Name }}</span></a>
+    {{ end }}
+  </li>
+</ul>
+-->
+    
+    
 </footer>
+

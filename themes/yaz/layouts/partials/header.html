@@ -2,8 +2,9 @@
 <!-- <p style="padding: 0;margin: 0;"> -->
   <a href="/">
     {{ .Site.Title }}
-    <span class="text-stone-500 animate-blink">●</span>
+    <span style="font-family: monospace" class="text-stone-500 animate-blink">☀</span>
   </a>
+
 <!-- </p> -->
 <ul style="padding: 0;margin: 0;">
   {{ $currentPage := . }}
@@ -11,6 +12,12 @@
   <li class="{{ if $currentPage.HasMenuCurrent "main" . }}active{{ end }}">
     <a href="{{ .URL }}"><span>{{ .Name }}</span></a>
     {{ end }}
+    <button id="theme-toggle" aria-label="Toggle Theme">
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 9C7.20914 9 9 7.20914 9 5C9 2.79086 7.20914 1 5 1C2.79086 1 1 2.79086 1 5C1 7.20914 2.79086 9 5 9ZM5 10C7.76142 10 10 7.76142 10 5C10 2.23858 7.76142 0 5 0C2.23858 0 0 2.23858 0 5C0 7.76142 2.23858 10 5 10Z" fill="currentColor"/>
+        <path d="M5 0C4.34339 -7.82988e-09 3.69321 0.129329 3.08658 0.380602C2.47995 0.631876 1.92876 1.00017 1.46447 1.46447C1.00017 1.92876 0.631876 2.47995 0.380602 3.08658C0.129329 3.69321 -2.08713e-08 4.34339 0 5C2.08713e-08 5.65661 0.129329 6.30679 0.380602 6.91342C0.631876 7.52005 1.00017 8.07124 1.46447 8.53553C1.92876 8.99983 2.47996 9.36812 3.08658 9.6194C3.69321 9.87067 4.34339 10 5 10V0Z" fill="currentColor"/>
+        </svg>            
+    </button>
   </li>
 </ul>
   

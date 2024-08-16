@@ -1,0 +1,64 @@
+<!-- Place in layouts > partials > image-modal.html -->
+<!-- Use the partial at the bottom of any page in which you want magnific pop-up images,
+  or simply place at the bottom of baseof.html -->
+<!-- Modal will open upon clicking the image. Modal will close with clicking the x or image. -->
+
+<!-- The Modal -->
+<div id="myModal" class="modal" onclick="closeModal()">
+  <button class="modal-close" onclick="closeModal()">close</button>
+  <div class="modal-content">
+    <img class="modal-pic" id="modalPic" onclick="closeModal()" style="max-width: 100%; max-height: 80vh; margin: auto;">
+  </div>
+</div>
+
+<script>
+  // Open the Modal
+  function openModal(clicked_id) {
+    var src = document.getElementById(clicked_id).src;
+    if (src.includes("#")) {
+      src = src.substring(0, src.indexOf("#"));
+    }
+    document.getElementById("modalPic").src = src;
+  
+    const modal = document.getElementById("myModal");
+    const modalContent = modal.querySelector(".modal-content");
+  
+    modal.style.display = "block"; // Initially set display to block
+    setTimeout(() => {
+      modal.classList.add("show"); // Add the show class after a slight delay
+      modalContent.classList.add("show");
+    }, 10); // A slight delay to ensure the CSS transition works
+  
+    // Ensures the site footer is not shown in front of the modal. Remove if this is not an issue or
+    // there is no footer. "site-footer" id can also be changed appropriately.
+    // document.getElementById("site-footer").style.display = "hidden";
+  }
+  
+  // Close the Modal
+  function closeModal() {
+    // prevents flashing last modal image while new id is loading on open
+    document.getElementById("modalPic").src = "";
+  
+    const modal = document.getElementById("myModal");
+    const modalContent = modal.querySelector(".modal-content");
+  
+    modal.classList.remove("show");
+    modalContent.classList.remove("show");
+  
+    setTimeout(() => {
+      modal.style.display = "none"; // Set display to none after the transition
+    }, 500); // Wait for the transition to complete (0.5s)
+  
+    // See note above regarding the footer
+    // document.getElementById("site-footer").style.display = "block";
+  }
+  
+  // Event listener to close the modal when clicking outside of it
+  window.addEventListener("click", function(event) {
+    const modal = document.getElementById("myModal");
+    if (event.target == modal) {
+      closeModal();
+    }
+  });
+  </script>
+  
