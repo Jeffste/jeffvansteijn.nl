@@ -3,19 +3,19 @@
     
     <title>Jeff</title>
     <description></description>
-    <link>https://jeffvansteijn.nl/</link>
+    <link>http://localhost:1313/</link>
     
     <language>en</language>
-    <copyright>Copyright 2024, Calvin Tran</copyright>
+    <copyright>Copyright 2026, Calvin Tran</copyright>
     <lastBuildDate>Mon, 06 May 2024 22:15:48 +0200</lastBuildDate>
     <generator>Hugo - gohugo.io</generator>
     <docs>http://cyber.harvard.edu/rss/rss.html</docs>
-    <atom:link href="https://jeffvansteijn.nl//atom.xml" rel="self" type="application/atom+xml"/>
+    <atom:link href="http://localhost:1313//atom.xml" rel="self" type="application/atom+xml"/>
     
     
     <item>
       <title>Restoring an old road bike</title>
-      <link>https://jeffvansteijn.nl/posts/raleigh-build/</link>
+      <link>http://localhost:1313/posts/raleigh-build/</link>
       <description>&lt;h2 id=&#34;buying-the-bike&#34;&gt;Buying the bike&lt;/h2&gt;
 &lt;p&gt;When I got this bike, it was in pretty bad shape. It had been stored in a shed for years. At that time, I didn&amp;rsquo;t know much about bike brands, groupsets, or frames. I just wanted to rebuild it, learn along the way, and hopefully make a small profit to buy something new. When I first got it, it couldn&amp;rsquo;t move because the tires were flat and the steering felt shaky. But hey, just look at those colors!&lt;/p&gt;
 &lt;div class=&#34;clearfix&#34;&gt;&lt;/div&gt;
@@ -29,7 +29,7 @@
 
 
 &lt;div class=&#34;md__image&#34;&gt;
-    &lt;img id=&#34;[219 390 436 339 285 438]&#34; src=&#34;https://jeffvansteijn.nl/images/raleigh-color.png#float-left-50&#34; onclick=&#34;openModal(this.id)&#34; alt=&#34;Raleigh&#34;  /&gt;
+    &lt;img id=&#34;[256 453 491 486 284 276]&#34; src=&#34;http://localhost:1313/images/raleigh-color.png#float-left-50&#34; onclick=&#34;openModal(this.id)&#34; alt=&#34;Raleigh&#34;  /&gt;
 &lt;/div&gt;
 
 
@@ -41,7 +41,7 @@
 
 
 &lt;div class=&#34;md__image&#34;&gt;
-    &lt;img id=&#34;[196 461 129 430 192 359]&#34; src=&#34;https://jeffvansteijn.nl/images/raleigh-color1.png#float-right-50&#34; onclick=&#34;openModal(this.id)&#34; alt=&#34;Raleigh&#34;  /&gt;
+    &lt;img id=&#34;[112 310 460 158 299 94]&#34; src=&#34;http://localhost:1313/images/raleigh-color1.png#float-right-50&#34; onclick=&#34;openModal(this.id)&#34; alt=&#34;Raleigh&#34;  /&gt;
 &lt;/div&gt;&lt;/p&gt;
 &lt;div class=&#34;clearfix&#34;&gt;&lt;/div&gt;
 &lt;p&gt;After spending some time researching, I found out that it was a simple entry-level bike from the 80s, a replica of the Panasonic Cycling team. This version, called the Aerospace, had some cool aerodynamic details like the dented seat tube and aero bottle (which was unfortunately missing). But surprisingly, everything else was in better condition than I expected. Nothing had been changed or replaced, and all the parts were original.&lt;/p&gt;
@@ -82,7 +82,7 @@
 
 
 &lt;div class=&#34;md__image&#34;&gt;
-    &lt;img id=&#34;[268 252 28 307 135 3]&#34; src=&#34;https://jeffvansteijn.nl/images/raleigh-before.png#float-left-50&#34; onclick=&#34;openModal(this.id)&#34; alt=&#34;Raleigh&#34;  /&gt;
+    &lt;img id=&#34;[445 438 133 305 418 65]&#34; src=&#34;http://localhost:1313/images/raleigh-before.png#float-left-50&#34; onclick=&#34;openModal(this.id)&#34; alt=&#34;Raleigh&#34;  /&gt;
 &lt;/div&gt;
 
 
@@ -94,7 +94,7 @@
 
 
 &lt;div class=&#34;md__image&#34;&gt;
-    &lt;img id=&#34;[224 2 163 330 442 404]&#34; src=&#34;https://jeffvansteijn.nl/images/raleigh-after.png#float-right-50&#34; onclick=&#34;openModal(this.id)&#34; alt=&#34;Raleigh&#34;  /&gt;
+    &lt;img id=&#34;[74 139 301 3 135 46]&#34; src=&#34;http://localhost:1313/images/raleigh-after.png#float-right-50&#34; onclick=&#34;openModal(this.id)&#34; alt=&#34;Raleigh&#34;  /&gt;
 &lt;/div&gt;&lt;/p&gt;
 &lt;div class=&#34;clearfix&#34;&gt;&lt;/div&gt;
 &lt;h2 id=&#34;new-parts&#34;&gt;New parts&lt;/h2&gt;
@@ -160,7 +160,7 @@ Yes, sometimes it was a bit of a puzzle, like figuring out how to reassemble the
 
 
 &lt;div class=&#34;md__image&#34;&gt;
-    &lt;img id=&#34;[201 135 296 43 74 24]&#34; src=&#34;https://jeffvansteijn.nl/images/raleigh.jpeg&#34; onclick=&#34;openModal(this.id)&#34; alt=&#34;Raleigh&#34;  /&gt;
+    &lt;img id=&#34;[443 194 219 230 215 214]&#34; src=&#34;http://localhost:1313/images/raleigh.jpeg&#34; onclick=&#34;openModal(this.id)&#34; alt=&#34;Raleigh&#34;  /&gt;
 &lt;/div&gt;&lt;/p&gt;
 &lt;div class=&#34;clearfix&#34;&gt;&lt;/div&gt;
 &lt;p&gt;
@@ -173,7 +173,7 @@ Yes, sometimes it was a bit of a puzzle, like figuring out how to reassemble the
 
 
 &lt;div class=&#34;md__image&#34;&gt;
-    &lt;img id=&#34;[293 177 294 366 357 173]&#34; src=&#34;https://jeffvansteijn.nl/images/raleigh-color.png#float-left-50&#34; onclick=&#34;openModal(this.id)&#34; alt=&#34;Raleigh&#34;  /&gt;
+    &lt;img id=&#34;[483 256 209 389 363 163]&#34; src=&#34;http://localhost:1313/images/raleigh-color.png#float-left-50&#34; onclick=&#34;openModal(this.id)&#34; alt=&#34;Raleigh&#34;  /&gt;
 &lt;/div&gt;
 
 
@@ -185,7 +185,7 @@ Yes, sometimes it was a bit of a puzzle, like figuring out how to reassemble the
 
 
 &lt;div class=&#34;md__image&#34;&gt;
-    &lt;img id=&#34;[267 471 17 419 424 469]&#34; src=&#34;https://jeffvansteijn.nl/images/raleigh-color1.png#float-right-50&#34; onclick=&#34;openModal(this.id)&#34; alt=&#34;Raleigh&#34;  /&gt;
+    &lt;img id=&#34;[431 36 113 118 82 359]&#34; src=&#34;http://localhost:1313/images/raleigh-color1.png#float-right-50&#34; onclick=&#34;openModal(this.id)&#34; alt=&#34;Raleigh&#34;  /&gt;
 &lt;/div&gt;&lt;/p&gt;
 &lt;div class=&#34;clearfix&#34;&gt;&lt;/div&gt;
 &lt;p&gt;And there you have it! I&amp;rsquo;m pleased with how it turned out. The bike is now completely rebuilt and rides smoothly. I almost decided to keep it, but unfortunately, I didn&amp;rsquo;t have enough space in my garage. So, I took some photos and listed them on Marktplaats (the Dutch version of eBay).&lt;/p&gt;
@@ -195,13 +195,13 @@ Yes, sometimes it was a bit of a puzzle, like figuring out how to reassemble the
 &lt;p&gt;So, to sum it up, this project wasn&amp;rsquo;t just about fixing a bike and making some money. It started as a way for me to learn more about bike mechanics. There&amp;rsquo;s something incredibly satisfying about rescuing a bike from the scrap heap and giving it a new home. Plus, knowing it will keep rolling for years to come is even better. This steel beauty is now ready for many new adventures.&lt;/p&gt;
 </description>
       <author></author>
-      <guid>https://jeffvansteijn.nl/posts/raleigh-build/</guid>
+      <guid>http://localhost:1313/posts/raleigh-build/</guid>
       <pubDate>Mon, 06 May 2024 22:15:48 +0200</pubDate>
     </item>
     
     <item>
       <title>Why I made this website</title>
-      <link>https://jeffvansteijn.nl/posts/my-first-post/</link>
+      <link>http://localhost:1313/posts/my-first-post/</link>
       <description>&lt;p&gt;It serves as a space where I can introduce myself, showcase my favorite work, and as sort of a personal note-taking/journal. Let me begin with the introduction; perhaps I&amp;rsquo;ll add some showcases later. When you land on the page, you might be surprised by its simple and minimalistic approach. Let me explain.&lt;/p&gt;
 &lt;p&gt;As most of the designers know, working on your portfolio can be a hell of a job! The ever-changing digital trends, never being satisfied, and often limited front-end skills. All this influenced my decision to opt for this minimalistic yet timeless design. (I might occasionally spice it up, but don’t expect anything too fancy.)&lt;/p&gt;
 &lt;h2 id=&#34;audience&#34;&gt;Audience&lt;/h2&gt;
@@ -210,7 +210,7 @@ Yes, sometimes it was a bit of a puzzle, like figuring out how to reassemble the
 &lt;p&gt;Yes, I&amp;rsquo;ve added a blog. Here, I will attempt to write about various topics, mainly focused on design. Now, do not expect groundbreaking articles; rather, it&amp;rsquo;s my perspective on random subjects within the field. As I will always add new content, I may change your mind about older posts.&lt;/p&gt;
 </description>
       <author></author>
-      <guid>https://jeffvansteijn.nl/posts/my-first-post/</guid>
+      <guid>http://localhost:1313/posts/my-first-post/</guid>
       <pubDate>Tue, 09 Apr 2024 20:20:11 +0200</pubDate>
     </item>
     
