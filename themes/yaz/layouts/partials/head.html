@@ -2,6 +2,16 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+      (function() {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+          document.documentElement.className = savedTheme;
+        } else {
+          document.documentElement.className = 'light'; // Default theme
+        }
+      })();
+    </script>
     <meta name="author" content="Liste - {{ .Site.BaseURL }}">
     <title>{{ if eq .IsHome true }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
     <meta name="description" content="{{ if ne .Description "" }}{{ .Description }}{{ else }}{{ .Site.Params.description }}{{ end }}">
@@ -84,17 +94,23 @@
       "keywords" : [ {{ range $index, $tag := .Params.tags }}{{ if $index }}, {{ end }}"{{ $tag }}" {{ end }}]
   }
   </script>
-  <script>
-    (function() {
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme) {
-        document.documentElement.className = savedTheme;
-      } else {
-        document.documentElement.className = 'light'; // Default theme
-      }
-    })();
-  </script>
   {{ end }}
 
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const header = document.querySelector('header.sticky');
+      if (header) {
+        function handleScroll() {
+          if (window.scrollY > 10) {
+            header.classList.add('header-scrolled');
+          } else {
+            header.classList.remove('header-scrolled');
+          }
+        }
+        window.addEventListener('scroll', handleScroll);
+        handleScroll(); // Check initial state
+      }
+    });
+  </script>
 
   </head>

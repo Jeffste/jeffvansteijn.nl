@@ -12,7 +12,7 @@ theme = 'yaz'
     weight = "-100"
   [[menu.main]]
     identifier = "posts"
-    name = "Post"
+    name = "Posts"
     url = "/posts/"
     weight = -200
     
