@@ -1,26 +1,141 @@
 <!doctype html>
 <html lang="en">
   {{ partial "head.html" . }}
-<body>
+
+  <body>
   <a class="skip-link" href="#main">Skip to main</a>
-  <main id="main">
+  <main id="main">  
     <div class="content">
       {{ partial "header.html" . }}
-      {{ .Content }}
+      <div class="introduction">{{ .Content }}</div>
+      <!-- <a href="/about" class="back-button">About</a> -->
+    
+    
+    <div class="latestwork">
       {{ if gt (len ( where .Site.RegularPages "Section" "posts" )) 0 }}
-      <!-- <h2>Latest Post</h2> -->
-      <section>
-        {{ range (first 3 (where .Site.RegularPages "Section" "posts" ).ByDate.Reverse) }}
-          <p>
-            <time class="g time" datetime="{{ dateFormat "January 2, 2006" .Date }}">{{ dateFormat "January 2, 2006" .Date }}</time>&nbsp;
-            <a href="{{ .Permalink }}">{{ .Title }}</a>
-          <p>
+      <h2>Latest Work</h2>
+      <section class="work-cards">
+        {{ range (first 3 (where .Site.RegularPages "Section" "work").ByDate.Reverse) }}
+          <a href="{{ .Permalink }}" class="work-card-link">
+            <article class="work-card">
+              <img src="{{ .Params.image }}" alt="{{ .Title }}" class="work-image" />
+              <div class="work-content">
+              <b>{{ .Title }}</b></br></br>
+                <span class="g time">{{ .Params.description }}</span> 
+                <!-- <span class="work-link">Bekijk project</span> -->
+              </div>
+            </article>
+          </a>
         {{ end }}
+      </section>
+    </div>
+
+      <!-- <hr> -->
+  <div class="writing">
+      <h2>Writing</h2>
+      <section>
+        <ul class="list">
+          {{ range (first 3 (where .Site.RegularPages "Section" "posts").ByDate.Reverse) }}
+            <li>
+              <a class="list-link" href="{{ .Permalink }}" title="{{ .Title }}">
+                <span class="list-title">{{ .Title }}</span>
+                <span class="list-divider"></span>
+                <time class="list-date" datetime="{{ dateFormat "2006-01-02" .Date }}">
+                  {{ dateFormat "January 2, 2006" .Date }}
+                </time>
+              </a>
+            </li>
+          {{ end }}
+        </ul>
+      </section>
+    </div>
+    
+  
+ 
+
+
+
+      
+      
+    
+      <section class="cv">
+        <h2>Work Experience:</h2>
+      
+        <ul>
+          <li>
+            <b>Senior Product Designer at 
+              <a class="external" href="https://trengo.com/" target="_blank" rel="noopener noreferrer">
+                Trengo
+                <svg class="icon-external" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0)">
+                    <path d="M11 8H10V2.70703L1.35352 11.3535L0.646484 10.6465L9.29297 2H4V1H11V8Z" fill="currentColor"/>
+                  </g>
+                  <defs>
+                    <clipPath id="clip0">
+                      <rect width="12" height="12" fill="currentColor"/>
+                    </clipPath>
+                  </defs>
+                </svg>
+              </a>
+            </b>
+            <em>2022 – Now</em>
+            <ul>
+              <li>Worked in an agile team to identify UX opportunities and solve product challenges through iterative design and prototyping. Improved onboarding, pricing, AI features, and SSO login, and collaborated with engineers to shape a scalable design system.</li>
+              <li>Utrecht, The Netherlands</li>
+            </ul>
+          </li>
+          <li>
+            <b>Product Designer at 
+              <a class="external" href="https://effectory.com/" target="_blank" rel="noopener noreferrer">
+                Effectory
+                <svg class="icon-external" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip1)">
+                    <path d="M11 8H10V2.70703L1.35352 11.3535L0.646484 10.6465L9.29297 2H4V1H11V8Z" fill="currentColor"/>
+                  </g>
+                  <defs>
+                    <clipPath id="clip1">
+                      <rect width="12" height="12" fill="currentColor"/>
+                    </clipPath>
+                  </defs>
+                </svg>
+              </a>
+            </b>
+            <em>2020 – 2022</em>
+            <ul>
+              <li>Started Effectory’s Figma component library and teamed up with engineers to improve design–dev collaboration, aiming for a more scalable system. Contributed to their Employee Feedback Solutions by designing survey and reporting dashboards for small teams. Also helped grow the design team by supporting interviews and design assessments.</li>
+              <li>Amsterdam, The Netherlands</li>
+            </ul>
+          </li>
+          <li>
+            <b>Visual designer at
+              <a class="external" href="https://yummygum.com/" target="_blank" rel="noopener noreferrer">
+                Yummygum
+                <svg class="icon-external" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip2)">
+                    <path d="M11 8H10V2.70703L1.35352 11.3535L0.646484 10.6465L9.29297 2H4V1H11V8Z" fill="currentColor"/>
+                  </g>
+                  <defs>
+                    <clipPath id="clip2">
+                      <rect width="12" height="12" fill="currentColor"/>
+                    </clipPath>
+                  </defs>
+                </svg>
+              </a>
+            </b>
+            <em>2016 – 2020</em>
+            <ul>
+              <li>With the Yummygum team, I worked on a wide range of client projects—pushing creativity and quality, which laid the foundation for my design career. I learned a lot and collaborated with great clients like Spider Strategies, Employes, Hotelchamp, and FindHotel.</li>
+              <li>Amsterdam, The Netherlands</li>
+            </ul>
+          </li>
+        </ul>
+        
       </section>
         {{ partial "footer.html" . }}
       {{ end }}
-    </div>
   </main>
-  <div class="noise"></div>
+
+
+
 </body>
 </html>

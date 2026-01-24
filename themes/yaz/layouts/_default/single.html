@@ -6,7 +6,7 @@
 <div class="showline"></div>
 <body class="grid"> 
 <!--<div class="bulb1"></div>-->
-  <div class="noise"></div>
+
 
   <a class="skip-link" href="#main">Skip to main</a>
   <main id="main">
@@ -28,7 +28,7 @@
     {{ end }}        
       <h1 class="post">{{ .Title }}</h1>
         {{ if .Params.summary }}
-      <div class="article-summary">
+      <div class="lead">
         {{ .Params.summary }}
       </div>
     {{ end }}

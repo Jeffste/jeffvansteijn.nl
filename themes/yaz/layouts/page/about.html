@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+  {{ partial "head.html" . }}
+
+  <body>
+  <a class="skip-link" href="#main">Skip to main</a>
+  <main id="main">
+    <div class="content">
+      {{ partial "header.html" . }}
+      {{ .Content }}
+      {{ if gt (len ( where .Site.RegularPages "Section" "posts" )) 0 }}
+      
+
+         <section class="finds-section">
+            <h2>Finds</h2>
+            <p>Things I find interesting, useful, or fun.</p>
+          
+            <!-- Filters met gekleurde dots -->
+            <div class="finds-filters">
+              <button class="finds-filter active" data-filter="all">
+                <span class="finds-dot dot-all"></span> All
+              </button>
+              <button class="finds-filter" data-filter="video">
+                <span class="finds-dot dot-video"></span> Video
+              </button>
+              <button class="finds-filter" data-filter="read">
+                <span class="finds-dot dot-read"></span> Read
+              </button>
+              <button class="finds-filter" data-filter="site">
+                <span class="finds-dot dot-site"></span> Site
+              </button>
+              <button class="finds-filter" data-filter="tool">
+                <span class="finds-dot dot-tool"></span> Tool
+              </button>
+            </div>
+          
+
+
+
+<!-- werkt niet -->
+<ul class="list">
+  {{ $finds := where .Site.RegularPages "Section" "finds" }}
+  {{ $sorted := sort $finds "Date" "desc" }}
+  {{ range $sorted }}
+  <li class="finds-item" 
+  data-type="{{ .Params.type }}">
+  <a class="list-link" href="{{ .Params.link }}" target="_blank" rel="noopener" data-preview="/images/{{ .Params.preview }}">
+        <span class="finds-dot dot-{{ .Params.type }}"></span>
+        <span class="list-title truncated-text ">{{ .Title }}</span>
+        <span class="list-divider"></span>
+        <time class="list-date" datetime="{{ dateFormat "2006-01-02" .Date }}">
+          {{ dateFormat "January 2, 2006" .Date }}
+        </time>
+      </a>
+    </li>
+    
+  {{ end }}
+</ul>
+
+      
+    
+    
+      
+      </section>
+        {{ partial "footer.html" . }}
+      {{ end }}
+    </div>
+  </main>
+</section>
+
+
+
+
+<!-- ✅ 1. Eerst de preview-box in de DOM -->
+<div id="finds-preview" class="preview-box">
+  <img src="" alt="Preview" />
+</div>
+
+<!-- ✅ 2. Dan pas het script -->
+<script>
+  const previewBox = document.getElementById('finds-preview');
+  const previewImage = previewBox?.querySelector('img');
+
+  document.querySelectorAll('.list-link').forEach((link) => {
+    link.addEventListener('mouseenter', (e) => {
+      const src = link.dataset.preview;
+      if (src && previewImage) {
+        previewImage.src = src;
+        // previewBox.hidden = false;
+        previewBox.classList.add('visible');
+      }
+    });
+
+    link.addEventListener('mousemove', (e) => {
+      previewBox.style.top = `${e.clientY + 12}px`;
+      previewBox.style.left = `${e.clientX + 12}px`;
+    });
+
+    link.addEventListener('mouseleave', () => {
+      // previewBox.hidden = true;
+      previewBox.classList.remove('visible');
+    });
+  });
+</script>
+
+
+
+  
+
+<!-- Filter -->
+  <script>
+
+    const filters = document.querySelectorAll('.finds-filter');
+    const items = document.querySelectorAll('.finds-item');
+  
+    filters.forEach(filter => {
+      filter.addEventListener('click', () => {
+        // Active class wisselen
+        filters.forEach(f => f.classList.remove('active'));
+        filter.classList.add('active');
+  
+        const selected = filter.dataset.filter;
+  
+        items.forEach(item => {
+          const type = item.dataset.type;
+  
+          // Herstel oorspronkelijke weergave met ''
+          item.style.display = (selected === 'all' || selected === type) ? '' : 'none';
+        });
+      });
+    });
+  </script>
+  
+
+
+
+</body>
+</html>

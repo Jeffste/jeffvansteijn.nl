@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+  {{ partial "head.html" . }}
+  {{ partial "image-modal.html" . }}
+
+  <div class="showline"></div>
+
+  <body class="grid"> 
+    <!-- <div class="noise"></div> -->
+    <a class="skip-link" href="#main">Skip to main</a>
+
+    <!-- STICKY TOC OUTSIDE CONTENT FLOW -->
+    <nav class="work-toc">
+      <div class="toc-list-wrapper">
+        <div class="toc-indicator"></div>
+        {{ .TableOfContents }}
+      </div>
+    </nav>
+    
+
+
+    <main id="main">
+      <div class="content work-item">
+        {{ partial "header.html" . }}
+        <a href="/" class="back-button">← Back</a>
+
+        <section>
+          {{ if not .Date.IsZero }}
+            <div class="post-date">
+              <!-- <span class="g time">{{ .Date.Format "January 2, 2006" }}</span>  -->
+              <img src="{{ .Params.hero }}" class="hero" />
+              {{ $taxonomy := "tags" }} 
+              {{ with .Param $taxonomy }}
+                {{ range $index, $tag := . }} 
+                  {{ with $.Site.GetPage (printf "/%s/%s" $taxonomy $tag) -}}
+                    <a href="{{ .Permalink }}">{{ $tag | urlize }}</a>
+                  {{- end -}} 
+                {{- end -}}
+              {{ end }}
+            </div>
+          {{ end }}
+
+          <h1 class="post">{{ .Title }}</h1>
+
+          {{ if .Params.summary }}
+            <div class="lead">
+              {{ .Params.summary }}
+            </div>
+          {{ end }}
+
+          {{ .Content }}
+
+          {{ partial "footer.html" . }}
+        </section>
+
+        {{ if eq .Section "posts" }}
+          {{ if eq .Site.Params.comments.enabled true }}
+            <!-- <div id="comments">{{ partial "comments.html" $ }}</div> -->
+          {{ end }}
+        {{ end }}
+
+      </div>
+    </main>
+
+
+
+
+  
+    <script>
+      const tocLinks = document.querySelectorAll('.work-toc a');
+      const tocIndicator = document.querySelector('.toc-indicator');
+    
+      // Zoek bijbehorende headings in content
+      const headings = Array.from(tocLinks)
+        .map(link => document.querySelector(link.getAttribute('href')))
+        .filter(Boolean);
+    
+      // Verplaats dot naar corresponderend TOC-item
+      function moveIndicatorTo(link) {
+        const rect = link.getBoundingClientRect();
+        const parentRect = link.closest('.toc-list-wrapper').getBoundingClientRect();
+        const offsetTop = rect.top - parentRect.top + rect.height / 2 - 4;
+        tocIndicator.style.top = `${offsetTop}px`;
+      }
+    
+      // Observer voor scroll-spy
+      const observer = new IntersectionObserver(
+        entries => {
+          entries.forEach(entry => {
+            const id = entry.target.id;
+            const link = document.querySelector(`.work-toc a[href="#${id}"]`);
+            if (entry.isIntersecting && link) {
+              tocLinks.forEach(l => l.classList.remove('active'));
+              link.classList.add('active');
+              moveIndicatorTo(link);
+            }
+          });
+        },
+        {
+          rootMargin: '-10% 0px -80% 0px',
+          threshold: 0
+        }
+      );
+    
+      // Observe alle headings
+      headings.forEach(section => {
+        if (section) observer.observe(section);
+      });
+    
+      // Initiale positionering op pageload
+      window.addEventListener('load', () => {
+        const active = document.querySelector('.work-toc a.active') || tocLinks[0];
+        if (active) {
+          active.classList.add('active');
+          moveIndicatorTo(active);
+        }
+      });
+    
+      // ❌ Disable link clicks: blokkeren van standaard gedrag
+      tocLinks.forEach(link => {
+        link.addEventListener('click', e => {
+          e.preventDefault();
+        });
+      });
+    </script>
+    
+    
+    
+    
+
+
+  </body>
+</html>

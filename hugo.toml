@@ -6,15 +6,16 @@ theme = 'yaz'
 [menu]
 
       [[menu.main]]
-    identifier = "bikes"
-    name = "Bikes"
-    url = "/bikes/"
+    identifier = "about"
+    name = "about"
+    url = "/about/"
     weight = "-100"
   [[menu.main]]
     identifier = "posts"
-    name = "Posts"
+    name = "posts"
     url = "/posts/"
     weight = -200
+
     
     
     [footer]

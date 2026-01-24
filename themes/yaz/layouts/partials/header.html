@@ -1,12 +1,11 @@
 <header class="sticky">
 <!-- <p style="padding: 0;margin: 0;"> -->
   <a href="/">
-    {{ .Site.Title }}
-    <span style="font-family: monospace" class="text-stone-500 animate-blink">☀</span>
+    <h4>{{ .Site.Title }}</h4>
+    <!-- <span style="font-family: monospace" class="text-stone-500 animate-blink">☀</span> -->
   </a>
-
 <!-- </p> -->
-<ul style="padding: 0;margin: 0;">
+<ul class="mainmenu">
   {{ $currentPage := . }}
   {{ range .Site.Menus.main }}
   <li class="{{ if $currentPage.HasMenuCurrent "main" . }}active{{ end }}">
