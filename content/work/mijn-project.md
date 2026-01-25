@@ -5,5 +5,4 @@ summary = 'Redesigned Trengo’s login flow to reduce friction, improve security
 description = "Trengo"
 image = "/images/raleigh-color.png"
 hero = "/images/hero@2x.png"
-draft = true
 +++
