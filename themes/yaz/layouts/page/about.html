@@ -44,10 +44,6 @@
   {{ range $sorted }}
   <li class="finds-item" 
   data-type="{{ .Params.type }}">
-
-  
-
-
   <a class="list-link" href="{{ .Params.link }}" target="_blank" rel="noopener" data-preview="{{ (print "/images/" .Params.preview) | absURL }}">
         <span class="finds-dot dot-{{ .Params.type }}"></span>
         <span class="list-title truncated-text ">{{ .Title }}</span>
@@ -57,7 +53,7 @@
         </time>
       </a>
     </li>
-    
+
   {{ end }}
 </ul>
 

@@ -28,7 +28,7 @@
           {{ if not .Date.IsZero }}
             <div class="post-date">
               <!-- <span class="g time">{{ .Date.Format "January 2, 2006" }}</span>  -->
-              <img src="{{ .Params.hero }}" class="hero" />
+              <!-- <img src="{{ .Params.hero }}" class="hero" /> -->
               {{ $taxonomy := "tags" }} 
               {{ with .Param $taxonomy }}
                 {{ range $index, $tag := . }} 
