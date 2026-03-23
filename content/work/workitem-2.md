@@ -4,7 +4,7 @@ date = 2026-03-05T20:37:14+01:00
 summary = ''
 description = "Trengo"
 image = "/images/SSO - cover@2x.png"
-draft = true
+draft = false
 +++
 
 As Trengo started working with larger, more enterprise-level customers, one thing kept coming back: no SSO meant missed deals. On top of that, the login experience itself felt a bit outdated and didn’t really build trust from the start.

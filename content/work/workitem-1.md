@@ -4,6 +4,7 @@ date = 2024-05-06T22:15:48+02:00
 summary = ''
 description = "Trengo"
 image = "/images/pp_000@2x.png"
+draft = false
 +++
 
 We redesigned Trengo’s pricing and moved from a seat based model to a more usage based approach, right on time. A model that better fits how customers use Automation and AI. With new plans and greater flexibility, we now offer a structure that supports the wide range of needs across our customers. Simpler, more focused, and built for the future.
