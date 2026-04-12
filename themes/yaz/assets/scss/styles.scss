@@ -428,6 +428,9 @@ code {
 
 ul {
     list-style-type: "—  ";
+    // color: red;
+    font-size: 18px;
+    line-height: 1.5rem;
 }
 
 li::marker {
@@ -436,7 +439,7 @@ li::marker {
 
 section ul{
 //    background-color: red;
-    padding-bottom: 1.5rem;
+    // padding-bottom: 1.5rem;
 
 
 }
@@ -445,7 +448,7 @@ section li{
 //    background-color: red;
 //    padding-bottom: 1.5rem;
 //    background-color: yellow;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
 }
 
 
