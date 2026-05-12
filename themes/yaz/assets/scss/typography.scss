@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
-// TYPOGRAPHY (Fonts: Tiempos Headline & Libre Franklin)
-// 4px grid-based scale, geïnspireerd op Medium/Vercel
+// TYPOGRAPHY (Fonts: Tiempos & Inter)
+// 4px grid-based scale
 // -----------------------------------------------------------------------------
 
 @import 'variables';
@@ -22,8 +22,8 @@ dl, dd {
 
 :root {
   // Fonts
-  --font-body: 'Libre Franklin', system-ui, sans-serif;
-  --font-heading: 'Tiempos Headline', serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-heading: 'Tiempos', serif;
 
   // Font sizes (clamp for responsive scaling)
   --font-size-sm: clamp(0.875rem, 0.85rem + 0.2vw, 0.95rem);    // 14–15px
@@ -65,8 +65,6 @@ body {
   font-family: var(--font-body);
   font-size: var(--font-size-base);
   line-height: var(--lh-loose);
-  color: #222;
-  background-color: #fff;
 }
 
 // Headings

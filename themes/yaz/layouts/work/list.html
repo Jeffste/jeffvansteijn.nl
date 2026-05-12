@@ -14,11 +14,22 @@
       {{ range .Pages.ByDate.Reverse }}
         <a href="{{ .Permalink }}" class="work-card-link">
           <article class="work-card">
-            <img src="{{ .Params.image }}" alt="{{ .Title }}" class="work-image" />
+            {{ $imagePath := strings.TrimPrefix "/" .Params.image }}
+            {{ $img := resources.Get $imagePath }}
+            {{ if $img }}
+              {{ $lqip := $img.Resize "16x16 jpg q20" }}
+              <img
+                class="work-image lqip"
+                src="{{ (printf "data:image/jpeg;base64,%s" ($lqip.Content | base64Encode)) | safeURL }}"
+                data-src="{{ $img.RelPermalink }}"
+                alt="{{ .Title }}"
+              />
+            {{ else }}
+              <img class="work-image" src="{{ .Params.image }}" alt="{{ .Title }}" />
+            {{ end }}
             <div class="work-content">
               <h3>{{ .Title }}</h3>
               <p>{{ .Params.description }}</p>
-              <span class="work-link">Bekijk project</span>
             </div>
           </article>
         </a>
