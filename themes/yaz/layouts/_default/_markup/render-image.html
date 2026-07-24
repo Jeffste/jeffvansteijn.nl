@@ -20,8 +20,9 @@
 {{- $w := 0 -}}
 {{- $h := 0 -}}
 {{- if $img -}}
-  {{- $target := cond (gt $img.Width 1200) 1200 $img.Width -}}
-  {{- $opt := $img.Resize (printf "%dx webp q82" $target) -}}
+  {{- /* Cap at 2400 so native @2x screenshots aren't downscaled; never upscale. */ -}}
+  {{- $target := cond (gt $img.Width 2400) 2400 $img.Width -}}
+  {{- $opt := $img.Resize (printf "%dx webp q92" $target) -}}
   {{- $src = $opt.RelPermalink -}}
   {{- $w = $opt.Width -}}
   {{- $h = $opt.Height -}}

@@ -339,8 +339,13 @@ z-index: 1; /* Ensure this content stays on top */
 img {
     display: block;
     max-width: 100%;
+    height: auto;
     max-height: 30rem;
     border-radius: 4px;
+}
+
+.md__image img {
+    max-height: none;
 }
 
 figure{
