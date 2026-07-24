@@ -1,20 +1,32 @@
-<!--<img
-  src="{{ .Destination | safeURL }}"
-  alt="{{ .Text }}"
-  loading="lazy"
-  decoding="async"
-  class="full-width"
-/>-->
-
-<!-- Images that use the standard image format for markdown will be displayed in a 
+<!-- Images that use the standard image format for markdown will be displayed in a
   magnific modal popup. Use format ![alt text](/path/to/image.img) -->
-<!-- Place this file in layouts > _default > _markup > render-image.html -->
-<!-- Also place the image-modal.css and partial/image-modal.html appropriately. -->
 <!-- Id for the image on the page is set to a random 6 numbers, chosen from 1 to 500 -->
-<!-- Onclick opens the modal, and displays/overlays the the image that has the id for the 
+<!-- Onclick opens the modal, and displays/overlays the the image that has the id for the
   clicked image. -->
 <!-- attribution appreciated. github: zjeaton web: https://froglegs.co -->
 
+{{- /* Run markdown images through Hugo's image pipeline: capped at 1200px wide and
+       converted to WebP, so the large @2x source PNGs are never served raw.
+       Animated GIFs, SVGs and remote images pass through untouched. */ -}}
+{{- $dest := .Destination -}}
+{{- $ext := lower (path.Ext $dest) -}}
+{{- $passthrough := in (slice ".gif" ".svg") $ext -}}
+{{- $img := false -}}
+{{- if not $passthrough -}}
+  {{- $img = resources.Get (strings.TrimPrefix "/" $dest) -}}
+{{- end -}}
+
+{{- $src := $dest -}}
+{{- $w := 0 -}}
+{{- $h := 0 -}}
+{{- if $img -}}
+  {{- $target := cond (gt $img.Width 1200) 1200 $img.Width -}}
+  {{- $opt := $img.Resize (printf "%dx webp q82" $target) -}}
+  {{- $src = $opt.RelPermalink -}}
+  {{- $w = $opt.Width -}}
+  {{- $h = $opt.Height -}}
+{{- end -}}
+
 <div class="md__image">
-    <img id="{{ first 6 (shuffle (seq 1 500)) }}" src="{{ .Destination | safeURL }}" onclick="openModal(this.id)" alt="{{ .Text }}" {{ with .Title}} title="{{ . }}"{{ end }} />
+    <img id="{{ first 6 (shuffle (seq 1 500)) }}" src="{{ $src | safeURL }}" onclick="openModal(this.id)" alt="{{ .Text }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if $w }} width="{{ $w }}" height="{{ $h }}"{{ end }} loading="lazy" decoding="async" />
 </div>

@@ -5,47 +5,54 @@
   <body>
   {{ partial "blob.html" . }}
   <a class="skip-link" href="#main">Skip to main</a>
-  <main id="main">  
-    <div class="content content--wide">
+  <main id="main">
+    <div class="content">
       {{ partial "header.html" . }}
-
       <div class="introduction">{{ .Content }}</div>
       <!-- <a href="/about" class="back-button">About</a> -->
-    
-      <hr>
-    <div class="latestwork">
-      {{ if gt (len ( where .Site.RegularPages "Section" "posts" )) 0 }}
-      <section class="hero-cards">
-        {{ range (first 3 (where .Site.RegularPages "Section" "work").ByDate.Reverse) }}
-          <a href="{{ .Permalink }}" class="hero-card-link" style="--card-bg: {{ .Params.bg | default "#fff" }};">
-            <article class="hero-card">
-              {{ $imagePath := strings.TrimPrefix "/" .Params.image }}
-              {{ $img := resources.Get $imagePath }}
-              {{ if $img }}
-                {{ $lqip := $img.Resize "16x16 jpg q20" }}
-                <img
-                  class="hero-card-image lqip"
-                  src="{{ (printf "data:image/jpeg;base64,%s" ($lqip.Content | base64Encode)) | safeURL }}"
-                  data-src="{{ $img.RelPermalink }}"
-                  alt="{{ .Title }}"
-                />
-              {{ else }}
-                <img class="hero-card-image" src="{{ .Params.image }}" alt="{{ .Title }}" />
-              {{ end }}
-              <div class="hero-card-meta">
-                <span class="hero-card-label">{{ .Params.label | default .Title }}</span>
-                <span class="hero-card-company">{{ .Params.description }}</span>
-              </div>
-            </article>
-          </a>
-        {{ end }}
-      </section>
-    </div>
 
-      <hr>
-  <!-- <div class="writing">
-      <h2>Writing</h2>
-      <section>
+      {{/* Scroll-driven card deck. Cards fan out + tilt as this section scrolls past.
+           A slot uses "img" for an image, or neither for the striped placeholder.
+           "xf" is the fan-out step: 0 = centre, ±1 = the cards either side. */}}
+      {{ $slots := slice
+        (dict "xf"  0 "z" 50 "img" "images/about-001.png")
+        (dict "xf" -1 "z" 40 "img" "images/about-003.png")
+        (dict "xf"  1 "z" 40 "img" "images/about-002.png")
+      }}
+      <section class="scroll-deck" data-scroll-deck aria-hidden="true">
+        <div class="scroll-deck__stage">
+          <div class="scroll-deck__cards">
+            {{ range $slots }}
+              <div class="deck-card" style="--xf: {{ .xf }}; z-index: {{ .z }};">
+                {{ $img := and .img (resources.Get .img) }}
+                {{ if $img }}
+                  {{ $lqip := $img.Resize "16x21 jpg q20" }}
+                  {{ $full := $img.Resize "400x webp q82" }}
+                  <img
+                    class="deck-card__img lqip"
+                    src="{{ (printf "data:image/jpeg;base64,%s" ($lqip.Content | base64Encode)) | safeURL }}"
+                    data-src="{{ $full.RelPermalink }}"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                {{ else }}
+                  <div class="deck-card__fill"></div>
+                {{ end }}
+              </div>
+            {{ end }}
+          </div>
+        </div>
+      </section>
+
+      <div class="about-row section-row">
+        <span class="section-row__label">About</span>
+        <p class="section-row__text">I’m a product designer at Trengo, working on tools for support and sales teams. Outside work: three kids, friends, a garden, a shed full of bikes, and a tent.</p>
+      </div>
+
+      {{ if gt (len ( where .Site.RegularPages "Section" "posts" )) 0 }}
+      <section class="writing section-row">
+        <h2 class="section-row__label">Writing</h2>
         <ul class="list">
           {{ range (first 3 (where .Site.RegularPages "Section" "posts").ByDate.Reverse) }}
             <li>
@@ -60,94 +67,127 @@
           {{ end }}
         </ul>
       </section>
-    </div> -->
-    
-  
- 
 
-    <!-- <hr> -->
+      {{/* Experience timeline — see design_handoff_experience_timeline/README.md.
+           Colours and type come from the site tokens so it works in light and dark.
+           Logos are inlined SVGs so the mark can be recoloured with CSS; each sits
+           in a brand-coloured chip (logoBg = chip, logoFg = mark). */}}
+      {{ $roles := slice
+        (dict
+          "date" "2022 – Today" "live" true
+          "role" "Senior Product Designer at" "company" "Trengo" "url" "https://trengo.com/"
+          "logo" "images/treng.svg" "logoBg" "#8557FF" "logoFg" "#FFFFFF"
+          "location" "Utrecht, The Netherlands"
+          "desc" "Worked in an agile team to identify UX opportunities and solve product challenges through iterative design and prototyping. Improved onboarding, pricing, AI features, and SSO login, and collaborated with engineers to shape a scalable design system.")
+        (dict
+          "date" "2020 – 2022" "live" false
+          "role" "Product Designer at" "company" "Effectory" "url" "https://effectory.com/"
+          "logo" "images/effectory.svg" "logoBg" "#FFCF2B" "logoFg" "#192743"
+          "location" "Amsterdam, The Netherlands"
+          "desc" "Started Effectory’s Figma component library and teamed up with engineers to improve design–dev collaboration, aiming for a more scalable system. Contributed to their Employee Feedback Solutions by designing survey and reporting dashboards for small teams. Also helped grow the design team by supporting interviews and design assessments.")
+        (dict
+          "date" "2016 – 2020" "live" false
+          "role" "Visual Designer at" "company" "Yummygum" "url" "https://yummygum.com/"
+          "logo" "images/yg.svg" "logoBg" "#58C7FF" "logoFg" "#FFFFFF"
+          "location" "Amsterdam, The Netherlands"
+          "desc" "With the Yummygum team, I worked on a wide range of client projects—pushing creativity and quality, which laid the foundation for my design career. I learned a lot and collaborated with great clients like Spider Strategies, Employes, Hotelchamp, and FindHotel.")
+      }}
+      <section class="timeline">
+        <ol class="timeline__entries">
+          {{ range $roles }}
+            <li class="tl-entry">
+              <div class="tl-date">{{ .date }}</div>
+              <div class="tl-marker" aria-hidden="true">
+                <span class="tl-dot-gap"></span>
+                <span class="tl-dot{{ if .live }} tl-dot--live{{ end }}"></span>
+              </div>
+              <div class="tl-body">
+                <div class="tl-title-row">
+                  {{/* Inlined so the white marks can be recoloured per brand via CSS.
+                       Colours captured here: inside `with`, the dot is the resource. */}}
+                  {{ $bg := .logoBg }}{{ $fg := .logoFg }}
+                  {{ with resources.Get .logo }}
+                    <span class="tl-logo" style="--tl-logo-bg: {{ $bg }}; --tl-logo-fg: {{ $fg }};" aria-hidden="true">{{ .Content | safeHTML }}</span>
+                  {{ end }}
+                  <h3 class="tl-title">{{ .role }}
+                    <a class="external tl-company" href="{{ .url }}" target="_blank" rel="noopener noreferrer">{{ .company }}<svg class="icon-external" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M11 8H10V2.70703L1.35352 11.3535L0.646484 10.6465L9.29297 2H4V1H11V8Z" fill="currentColor"/></svg></a>
+                  </h3>
+                </div>
+                <p class="tl-desc">{{ .desc }}</p>
+                {{/* Pin from assets/images/location.svg, inlined with currentColor so it
+                     inherits the text colour — the source file has a hardcoded light grey
+                     that would be invisible in light mode. Matches .icon-external. */}}
+                <div class="tl-location">
+                  <svg class="icon-location" width="8" height="11" viewBox="0 0 8 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path fill-rule="evenodd" clip-rule="evenodd" d="M4 0C6.20914 0 8 1.79086 8 4C8 6.20914 5.20914 11 4 11C2.79086 11 0 6.20914 0 4C0 1.79086 1.79086 0 4 0ZM4 2C2.89543 2 2 2.89543 2 4C2 5.10457 2.89543 6 4 6C5.10457 6 6 5.10457 6 4C6 2.89543 5.10457 2 4 2Z" fill="currentColor"/></svg>
+                  <span>{{ .location }}</span>
+                </div>
+              </div>
+            </li>
+          {{ end }}
+        </ol>
 
-      
-      
-    
-      <section class="cv">
-        <h2>Work Experience:</h2>
-      
-        <ul>
-          <li>
-            <b>Senior Product Designer at 
-              <a class="external" href="https://trengo.com/" target="_blank" rel="noopener noreferrer">
-                Trengo
-                <svg class="icon-external" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <g clip-path="url(#clip0)">
-                    <path d="M11 8H10V2.70703L1.35352 11.3535L0.646484 10.6465L9.29297 2H4V1H11V8Z" fill="currentColor"/>
-                  </g>
-                  <defs>
-                    <clipPath id="clip0">
-                      <rect width="12" height="12" fill="currentColor"/>
-                    </clipPath>
-                  </defs>
-                </svg>
-              </a>
-            </b>
-            <em>2022 – Now</em>
-            <ul>
-              <li>Worked in an agile team to identify UX opportunities and solve product challenges through iterative design and prototyping. Improved onboarding, pricing, AI features, and SSO login, and collaborated with engineers to shape a scalable design system.</li>
-              <li>Utrecht, The Netherlands</li>
-            </ul>
-          </li>
-          <li>
-            <b>Product Designer at 
-              <a class="external" href="https://effectory.com/" target="_blank" rel="noopener noreferrer">
-                Effectory
-                <svg class="icon-external" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <g clip-path="url(#clip1)">
-                    <path d="M11 8H10V2.70703L1.35352 11.3535L0.646484 10.6465L9.29297 2H4V1H11V8Z" fill="currentColor"/>
-                  </g>
-                  <defs>
-                    <clipPath id="clip1">
-                      <rect width="12" height="12" fill="currentColor"/>
-                    </clipPath>
-                  </defs>
-                </svg>
-              </a>
-            </b>
-            <em>2020 – 2022</em>
-            <ul>
-              <li>Started Effectory’s Figma component library and teamed up with engineers to improve design–dev collaboration, aiming for a more scalable system. Contributed to their Employee Feedback Solutions by designing survey and reporting dashboards for small teams. Also helped grow the design team by supporting interviews and design assessments.</li>
-              <li>Amsterdam, The Netherlands</li>
-            </ul>
-          </li>
-          <li>
-            <b>Visual designer at
-              <a class="external" href="https://yummygum.com/" target="_blank" rel="noopener noreferrer">
-                Yummygum
-                <svg class="icon-external" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <g clip-path="url(#clip2)">
-                    <path d="M11 8H10V2.70703L1.35352 11.3535L0.646484 10.6465L9.29297 2H4V1H11V8Z" fill="currentColor"/>
-                  </g>
-                  <defs>
-                    <clipPath id="clip2">
-                      <rect width="12" height="12" fill="currentColor"/>
-                    </clipPath>
-                  </defs>
-                </svg>
-              </a>
-            </b>
-            <em>2016 – 2020</em>
-            <ul>
-              <li>With the Yummygum team, I worked on a wide range of client projects—pushing creativity and quality, which laid the foundation for my design career. I learned a lot and collaborated with great clients like Spider Strategies, Employes, Hotelchamp, and FindHotel.</li>
-              <li>Amsterdam, The Netherlands</li>
-            </ul>
-          </li>
-        </ul>
-        
       </section>
         {{ partial "footer.html" . }}
       {{ end }}
   </main>
 
+  <script>
+    (function () {
+      var section = document.querySelector('[data-scroll-deck]');
+      if (!section) return;
+      var cards = Array.prototype.slice.call(section.querySelectorAll('.deck-card'));
+      if (!cards.length) return;
 
+      // Static, gently-spread layout for users who prefer reduced motion.
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        return; // CSS handles the resting/spread state.
+      }
+
+      // Tuning — kept in sync with the SCSS custom properties.
+      function readVar(name, fallback) {
+        var v = parseFloat(getComputedStyle(section).getPropertyValue(name));
+        return isNaN(v) ? fallback : v;
+      }
+
+      var raf = null, lastP = -1;
+
+      function ease(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+      function lerp(a, b, t) { return a + (b - a) * t; }
+
+      function apply() {
+        raf = null;
+        var spread  = readVar('--spread', 200);
+        var tilt    = readVar('--tilt', 3.5);
+        var rest    = readVar('--rest', 3);
+        var restRot = readVar('--rest-rot', 1.5);
+
+        var rect = section.getBoundingClientRect();
+        var total = rect.height - window.innerHeight;
+        var p = total > 0 ? (-rect.top) / total : 0;
+        p = Math.max(0, Math.min(1, p));
+        if (Math.abs(p - lastP) < 0.0005) return;
+        lastP = p;
+        var e = ease(p);
+
+        for (var i = 0; i < cards.length; i++) {
+          var xf = parseFloat(cards[i].style.getPropertyValue('--xf')) || 0;
+          var x = lerp(xf * rest, xf * spread, e);
+          var rot = lerp(xf * restRot, xf * tilt, e);
+          cards[i].style.transform =
+            'translate(-50%, -50%) translateX(' + x.toFixed(2) + 'px) rotate(' + rot.toFixed(2) + 'deg)';
+        }
+      }
+
+      function onScroll() {
+        if (raf) return;
+        raf = requestAnimationFrame(apply);
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll, { passive: true });
+      apply();
+    })();
+  </script>
 
 </body>
 </html>

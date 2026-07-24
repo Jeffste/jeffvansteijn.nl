@@ -56,8 +56,72 @@
 
 
 .introduction{
+  /* Hero: headline left-aligned, vertically centred in the viewport.
+     The block sits below the sticky header (65px + 32px margin = 97px above it),
+     so subtracting 2× that footprint keeps the headline at the true optical
+     centre of the screen with balanced whitespace above and below. */
+  min-height: calc(100vh - 194px);
+  min-height: calc(100svh - 194px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.introduction h1 {
+  margin-top: 0;
+  margin-bottom: var(--space-2);
+}
+
+/* Role line under the name — smaller, sans-serif, muted. */
+.hero-subtitle {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--font-size-md);
+  color: var(--text-color);
+}
+
+/* Two-column section row: muted label on the left, content on the right.
+   Shared by About and Writing so both align to exactly the same columns. */
+.section-row {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: var(--space-8);
+  align-items: start;
+}
+
+.section-row__label {
+  /* Resets so an <h2> label renders identically to a plain <span> label. */
+  margin: 0;
+  max-width: none;
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.35;
+  color: var(--text-color);
+  padding-top: 0.15em;
+}
+
+.section-row__text {
+  margin: 0;
+  max-width: none;
+  /* Match the CV description text: base size, muted text colour, tight line-height. */
+  font-size: var(--font-size-base);
+  line-height: 1.35;
+  color: var(--text-color);
+}
+
+.about-row {
   margin-top: 80px;
-  margin-bottom: 120px;
+}
+
+@media (max-width: 600px) {
+  .section-row {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+  .section-row__label { padding-top: 0; }
 }
 
 .latestwork{
@@ -66,8 +130,8 @@
 }
 
 .writing{
-  margin-top: 120px;
-  margin-bottom: 120px;
+  margin-top: 240px;
+  margin-bottom: 240px;
 }
 
 
@@ -994,6 +1058,13 @@ html.dark .hero-card-link::after {
     flex-grow: 1;
   }
 
+  /* Card title uses the body sans-serif, not the serif heading font. */
+  .work-content h3 {
+    font-family: var(--font-body);
+    font-size: var(--font-size-base);
+    letter-spacing: 0;
+  }
+
   .work-content b{
     color: var(--title-color);
   }
@@ -1454,3 +1525,321 @@ display: none;}
   display: block;
 }
 
+/* ── Scroll-driven card deck (homepage hero) ─────────────────────────── */
+.scroll-deck {
+  /* Tuning — also read by the inline scroll script in index.html. */
+  --card-w: 200px;
+  --spread: 200px;   /* px each card travels per step at full spread */
+  --tilt: 3.5deg;    /* deg per step at full spread */
+  --rest: 3px;       /* px peek per step while stacked */
+  --rest-rot: 1.5deg;/* deg per step while stacked */
+  --radius: 10px;
+
+  position: relative;
+  height: 150vh;                       /* scroll length */
+  margin: 40px 0 0;                    /* 40px gap to the About row is set on .about-row */
+  /* Full-bleed break-out of the 600px .content column. */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+.scroll-deck__stage {
+  /* Stage just tall enough for the cards (card height + room for the rotated outer
+     cards), pinned centred: keeps the cards in the middle of the screen during the
+     scroll while cutting the empty space that used to sit between the cards and the
+     About section. Card-height based so the trailing gap stays tight on any screen. */
+  --stage-h: calc(var(--card-w) * 4 / 3 + 44px);
+  position: sticky;
+  top: calc((100vh - var(--stage-h)) / 2);
+  top: calc((100svh - var(--stage-h)) / 2);
+  height: var(--stage-h);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.scroll-deck__cards {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.deck-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--card-w);
+  height: calc(var(--card-w) * 4 / 3);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--base-color);
+  will-change: transform;
+  /* Resting (stacked) state — also the no-JS fallback. JS overrides on load. */
+  transform: translate(-50%, -50%)
+             translateX(calc(var(--xf) * var(--rest)))
+             rotate(calc(var(--xf) * var(--rest-rot)));
+}
+
+.deck-card__img,
+.deck-card__fill {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.deck-card__fill {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--hover-color),
+    var(--hover-color) 11px,
+    var(--divider-color) 11px,
+    var(--divider-color) 22px
+  );
+}
+
+/* Subtle per-card tonal shift so the placeholder stack reads as distinct cards. */
+.deck-card:nth-child(1) .deck-card__fill { filter: brightness(1.04); }
+.deck-card:nth-child(2) .deck-card__fill { filter: brightness(0.99); }
+.deck-card:nth-child(3) .deck-card__fill { filter: brightness(1.02); }
+.deck-card:nth-child(4) .deck-card__fill { filter: brightness(0.96); }
+.deck-card:nth-child(5) .deck-card__fill { filter: brightness(1.00); }
+
+.deck-card__img.lqip {
+  filter: blur(12px);
+  transform: scale(1.05);
+  transition: filter 0.4s ease, transform 0.4s ease;
+}
+
+.deck-card__img.lqip.loaded {
+  filter: none;
+  transform: scale(1);
+}
+
+@media (max-width: 600px) {
+  .scroll-deck {
+    --card-w: 132px;
+    --spread: 96px;
+    --tilt: 3deg;
+  }
+}
+
+/* Reduced motion: no scroll-jacking; show a calm, static fan. */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-deck {
+    height: auto;
+  }
+  .scroll-deck__stage {
+    position: static;
+    height: 70vh;
+  }
+  .deck-card {
+    transform: translate(-50%, -50%)
+               translateX(calc(var(--xf) * var(--spread) * 0.6))
+               rotate(calc(var(--xf) * var(--tilt) * 0.6));
+  }
+}
+
+
+/* ── Experience timeline ──────────────────────────────────────────────
+   Design: design_handoff_experience_timeline/README.md
+   The handoff specifies a fixed dark palette; here it is mapped onto the
+   site's theme tokens so the section works in both light and dark. Only the
+   "live" green is a literal brand value — it has no equivalent token. */
+.timeline {
+  --tl-date-col: 96px;   /* col 1: date label            */
+  --tl-rail-col: 64px;   /* col 2: rail + dot            */
+  --tl-dot-x: 20px;      /* dot centre within col 2      */
+  --tl-dot: 10px;
+  --tl-dot-gap: 18px;    /* bg-coloured mask behind dot  */
+  --tl-live: #3FB950;
+
+  margin-top: 120px;
+}
+
+.timeline__entries {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-width: none;
+}
+
+/* Vertical rail, centred on the dots. Starts at the top dot's centre. */
+.timeline__entries::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--tl-date-col) + var(--tl-dot-x));
+  transform: translateX(-50%);
+  top: 12px;
+  bottom: 0;
+  width: 2px;
+  border-radius: 1px;
+  /* Derived from the text colour rather than --divider-color: the divider token
+     is near-white in light and near-black in dark, so it vanishes at one end. */
+  background: var(--text-color);
+  opacity: 0.22;
+}
+
+.tl-entry {
+  display: grid;
+  grid-template-columns: var(--tl-date-col) var(--tl-rail-col) 1fr;
+  margin-bottom: 72px;
+}
+
+.tl-entry:last-child {
+  margin-bottom: 56px;
+}
+
+.tl-date {
+  /* 3px (spec says 5px) so the first line's optical centre lines up with the dot. */
+  padding-top: 3px;
+  font-size: var(--font-size-sm);
+  line-height: 1.35;
+  color: var(--text-color);
+  font-variant-numeric: tabular-nums;
+}
+
+.tl-marker {
+  position: relative;
+}
+
+.tl-dot,
+.tl-dot-gap {
+  position: absolute;
+  left: var(--tl-dot-x);
+  top: 12px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Punches a gap in the rail so it reads: gap · dot · gap · line */
+.tl-dot-gap {
+  width: var(--tl-dot-gap);
+  height: var(--tl-dot-gap);
+  background: var(--base-color);
+}
+
+.tl-dot {
+  width: var(--tl-dot);
+  height: var(--tl-dot);
+  background: var(--text-color);
+  opacity: 0.4;
+}
+
+.tl-dot--live {
+  background: var(--tl-live);
+  opacity: 1;
+  animation: tlPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes tlPulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(63, 185, 80, 0.22); }
+  50%      { box-shadow: 0 0 0 9px rgba(63, 185, 80, 0.05); }
+}
+
+.tl-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+/* Brand-coloured chip holding an inlined logo mark. Colours are passed per
+   company as --tl-logo-bg / --tl-logo-fg from the template. */
+.tl-logo {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--tl-logo-bg, #fff);
+  color: var(--tl-logo-fg, #000);
+  border-radius: 6px;
+  overflow: hidden;
+  /* 2px ring in the chip's own colour at 20%. Drawn as an outline so it sits
+     outside the box and doesn't shrink the 20px chip. The first declaration is
+     a neutral fallback for browsers without color-mix(). */
+  outline: 2px solid rgba(128, 128, 128, 0.2);
+  outline: 2px solid color-mix(in srgb, var(--tl-logo-bg, #fff) 20%, transparent);
+  outline-offset: 0;
+}
+
+.tl-logo svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
+/* A CSS declaration beats the SVG's own fill="white" presentation attribute,
+   so each mark takes its brand colour. */
+.tl-logo svg path {
+  fill: currentColor;
+}
+
+/* Resets so the <h3> matches the spec'd 17px/600 title. */
+.tl-title {
+  margin: 0;
+  max-width: none;
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0;
+  color: var(--title-color);
+}
+
+.tl-company {
+  color: var(--accent-color);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.tl-company:hover {
+  filter: brightness(1.15);
+}
+
+.tl-desc {
+  margin: 0 0 16px;
+  max-width: none;
+  font-size: var(--font-size-base);
+  line-height: 1.65;
+  color: var(--text-color);
+  text-wrap: pretty;
+}
+
+.tl-location {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-size-sm);
+  color: var(--text-color);
+}
+
+/* Inherits the location text colour via fill="currentColor". */
+.icon-location {
+  width: 8px;
+  height: 11px;
+  flex: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tl-dot--live { animation: none; }
+}
+
+/* Narrow screens: tighten the columns so the rail survives instead of stacking. */
+@media (max-width: 600px) {
+  .timeline {
+    --tl-date-col: 68px;
+    --tl-rail-col: 28px;
+    --tl-dot-x: 12px;
+  }
+
+  .tl-entry { margin-bottom: 48px; }
+  .tl-entry:last-child { margin-bottom: 40px; }
+}
