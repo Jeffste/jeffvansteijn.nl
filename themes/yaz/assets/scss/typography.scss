@@ -121,14 +121,28 @@ li + li {
   margin-top: var(--space-2);
 }
 
-// Blockquote
+// Blockquote (editorial pull-quote)
 blockquote {
+  font-family: var(--font-heading);
   font-style: italic;
-  font-size: var(--font-size-md);
-  color: #444;
-  padding-left: var(--space-4);
-  border-left: 3px solid #ddd;
-  margin-bottom: var(--space-6);
+  font-size: var(--font-size-lg);
+  line-height: 1.4;
+  color: var(--title-color);
+  margin: var(--space-10) 0;
+  padding: 0;
+  border: none;
+  max-width: var(--max-text-width);
+}
+
+blockquote p {
+  margin-bottom: var(--space-3);
+  max-width: none;
+}
+
+blockquote + p {
+  font-size: var(--font-size-sm);
+  color: var(--text-color);
+  margin-top: calc(-1 * var(--space-4));
 }
 
 // Inline code
@@ -171,3 +185,31 @@ pre {
 .text-md  { font-size: var(--font-size-md); }
 .text-lg  { font-size: var(--font-size-lg); }
 .text-xl  { font-size: var(--font-size-xl); }
+
+// Editorial inline links
+.content p a,
+.content li a,
+.content blockquote a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--divider-color);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.2s ease;
+}
+
+.content p a:hover,
+.content li a:hover,
+.content blockquote a:hover {
+  text-decoration-color: var(--accent-color);
+}
+
+// Reset for navigation contexts that don't want editorial underlines
+header a,
+.mainmenu a,
+.post-list a,
+.post-list-item,
+.list-link,
+.work-card-link {
+  text-decoration: none;
+}
