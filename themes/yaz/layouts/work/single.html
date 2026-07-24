@@ -5,7 +5,8 @@
 
   <div class="showline"></div>
 
-  <body class="grid"> 
+  <body class="grid" {{ if .Params.bg }}style="--page-bg: {{ .Params.bg }};"{{ end }}>
+    {{ partial "blob.html" . }}
     <!-- <div class="noise"></div> -->
     <a class="skip-link" href="#main">Skip to main</a>
 
@@ -116,10 +117,15 @@
         }
       });
     
-      // ❌ Disable link clicks: blokkeren van standaard gedrag
+      // Smooth scroll on TOC link click
       tocLinks.forEach(link => {
         link.addEventListener('click', e => {
           e.preventDefault();
+          const target = document.querySelector(link.getAttribute('href'));
+          if (target) {
+            const offset = target.getBoundingClientRect().top + window.scrollY - 80;
+            window.scrollTo({ top: offset, behavior: 'smooth' });
+          }
         });
       });
     </script>

@@ -4,6 +4,8 @@ date = 2026-03-05T20:37:14+01:00
 summary = ''
 description = "Trengo"
 image = "/images/SSO - cover@2x.png"
+bg = "#FAF9F5"
+label = "Login & SSO"
 draft = false
 +++
 

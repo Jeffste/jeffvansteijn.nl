@@ -3,37 +3,38 @@
   {{ partial "head.html" . }}
 
   <body>
+  {{ partial "blob.html" . }}
   <a class="skip-link" href="#main">Skip to main</a>
   <main id="main">  
-    <div class="content">
+    <div class="content content--wide">
       {{ partial "header.html" . }}
+
       <div class="introduction">{{ .Content }}</div>
       <!-- <a href="/about" class="back-button">About</a> -->
     
       <hr>
     <div class="latestwork">
       {{ if gt (len ( where .Site.RegularPages "Section" "posts" )) 0 }}
-      <h2>Latest Work</h2>
-      <section class="work-cards">
+      <section class="hero-cards">
         {{ range (first 3 (where .Site.RegularPages "Section" "work").ByDate.Reverse) }}
-          <a href="{{ .Permalink }}" class="work-card-link">
-            <article class="work-card">
+          <a href="{{ .Permalink }}" class="hero-card-link" style="--card-bg: {{ .Params.bg | default "#fff" }};">
+            <article class="hero-card">
               {{ $imagePath := strings.TrimPrefix "/" .Params.image }}
               {{ $img := resources.Get $imagePath }}
               {{ if $img }}
                 {{ $lqip := $img.Resize "16x16 jpg q20" }}
                 <img
-                  class="work-image lqip"
+                  class="hero-card-image lqip"
                   src="{{ (printf "data:image/jpeg;base64,%s" ($lqip.Content | base64Encode)) | safeURL }}"
                   data-src="{{ $img.RelPermalink }}"
                   alt="{{ .Title }}"
                 />
               {{ else }}
-                <img class="work-image" src="{{ .Params.image }}" alt="{{ .Title }}" />
+                <img class="hero-card-image" src="{{ .Params.image }}" alt="{{ .Title }}" />
               {{ end }}
-              <div class="work-content">
-                <b>{{ .Title }}</b><br><br>
-                <span class="g time">{{ .Params.description }}</span>
+              <div class="hero-card-meta">
+                <span class="hero-card-label">{{ .Params.label | default .Title }}</span>
+                <span class="hero-card-company">{{ .Params.description }}</span>
               </div>
             </article>
           </a>

@@ -4,6 +4,8 @@ date = 2024-05-06T22:15:48+02:00
 summary = ''
 description = "Trengo"
 image = "/images/pp_000@2x.png"
+bg = "#FAF9F5"
+label = "Subscriptions & Payments"
 draft = false
 +++
 
