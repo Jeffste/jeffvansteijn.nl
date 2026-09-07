@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ .Title }}</title>
+  <meta name="robots" content="noindex">
+  <style>
+    @font-face {
+      font-family: "Tiempos";
+      src: url('/TiemposHeadlineWeb-Semibold.woff2') format('woff2');
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Inter";
+      src: url('/InterVariable.woff2') format('woff2');
+      font-weight: 100 900;
+      font-display: swap;
+    }
+
+    :root {
+      --bg: #FDFDFB;
+      --title: #000;
+      --text: #615A47;
+      --accent: #DC8638;
+      --divider: #EBEBEB;
+      --font-body: 'Inter', system-ui, sans-serif;
+      --font-heading: 'Tiempos', Georgia, serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+
+    html { background: #e9e7e1; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.55;
+      font-size: 10.5pt;
+      margin: 0;
+      -webkit-font-smoothing: antialiased;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* On-screen: show the CV on an A4-ish sheet centered on a soft ground. */
+    .sheet {
+      max-width: 210mm;
+      min-height: 297mm;
+      margin: 24px auto;
+      padding: 18mm 16mm;
+      background: var(--bg);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    /* ── Header ── */
+    .cv-head {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--divider);
+    }
+
+    .cv-photo {
+      width: 76px;
+      height: 76px;
+      flex: none;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #efece4;
+    }
+
+    .cv-photo--fallback {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+      font-size: 34px;
+      color: var(--title);
+      border: 1px solid var(--divider);
+    }
+
+    .cv-name {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      color: var(--title);
+      font-size: 26pt;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      margin: 0 0 4px;
+    }
+
+    .cv-role {
+      font-size: 11pt;
+      color: var(--text);
+      margin: 0 0 8px;
+    }
+
+    .cv-contact {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 10px;
+      font-size: 9pt;
+      color: var(--text);
+    }
+
+    .cv-contact a { color: inherit; text-decoration: none; }
+    .cv-contact span:not(:last-child)::after {
+      content: "·";
+      margin-left: 10px;
+      color: var(--divider);
+    }
+
+    /* ── Sections ── */
+    .cv-section { margin-top: 40px; }
+
+    .cv-section > h2 {
+      font-family: var(--font-body);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 8.5pt;
+      font-weight: 600;
+      color: var(--title);
+      margin: 0 0 12px;
+    }
+
+    .cv-intro {
+      font-size: 10.5pt;
+      line-height: 1.5;
+      color: var(--text);
+      margin: 0;
+      max-width: 64ch;
+    }
+
+    /* ── Experience ── */
+    .cv-role-row {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 16px;
+      padding: 7px 0;
+      border-top: 1px solid var(--divider);
+      break-inside: avoid;
+    }
+    .cv-role-row:first-of-type { border-top: none; padding-top: 0; }
+
+    .cv-role-date {
+      font-size: 9pt;
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
+      padding-top: 2px;
+    }
+
+    .cv-role-title {
+      font-size: 11pt;
+      font-weight: 600;
+      color: var(--title);
+      margin: 0 0 2px;
+    }
+    .cv-role-title .company { color: var(--accent); }
+
+    .cv-role-loc {
+      font-size: 8.5pt;
+      color: var(--text);
+      margin: 0 0 6px;
+    }
+
+    .cv-role-desc {
+      font-size: 9.5pt;
+      line-height: 1.5;
+      margin: 0;
+      max-width: 70ch;
+    }
+
+    /* ── Skills ── */
+    .cv-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .cv-tags li {
+      font-size: 9pt;
+      color: var(--title);
+      border: 1px solid var(--divider);
+      border-radius: 999px;
+      padding: 3px 10px;
+    }
+
+    /* ── Education ── */
+    .cv-edu-row {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 16px;
+      padding: 7px 0;
+      break-inside: avoid;
+    }
+    .cv-edu-date {
+      font-size: 9pt;
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
+    }
+    .cv-edu-title { font-size: 10.5pt; font-weight: 600; color: var(--title); margin: 0 0 2px; }
+    .cv-edu-sub { font-size: 9.5pt; margin: 0; }
+
+    /* Print helper — hidden when printing */
+    .cv-hint {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      background: var(--title);
+      color: #fff;
+      font-size: 12px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    }
+
+    @media print {
+      html { background: #fff; }
+      .sheet {
+        margin: 0;
+        padding: 0;
+        max-width: none;
+        min-height: 0;
+        box-shadow: none;
+      }
+      .cv-hint { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="sheet">
+
+    {{ $photo := resources.Get "images/cv-photo.jpg" }}
+    <header class="cv-head">
+      {{ if $photo }}
+        <img class="cv-photo" src="{{ $photo.RelPermalink }}" alt="Jeff van Steijn" />
+      {{ else }}
+        <div class="cv-photo cv-photo--fallback" aria-hidden="true">J</div>
+      {{ end }}
+      <div>
+        <h1 class="cv-name">Jeff van Steijn</h1>
+        <p class="cv-role">Product Designer</p>
+        <div class="cv-contact">
+          <span><a href="mailto:contact@jeffvansteijn.nl">contact@jeffvansteijn.nl</a></span>
+          <span><a href="https://jeffvansteijn.nl">jeffvansteijn.nl</a></span>
+          <span>Utrecht, The Netherlands</span>
+          <span><a href="https://www.linkedin.com/in/jeffvansteijn">linkedin.com/in/jeffvansteijn</a></span>
+        </div>
+      </div>
+    </header>
+
+    <section class="cv-section">
+      <p class="cv-intro">I’m a product designer at Trengo, working on communication tools for support and sales teams. I enjoy understanding problems and designing solutions that work for both the customer and the business. Outside work, you’ll find me with my three kids, in the garden, or in a shed full of bikes waiting for the next rebuild.</p>
+    </section>
+
+    <section class="cv-section">
+      <h2>Experience</h2>
+
+      {{ $roles := slice
+        (dict
+          "date" "2022 – Today"
+          "role" "Senior Product Designer at" "company" "Trengo"
+          "location" "Utrecht, The Netherlands"
+          "desc" "Worked in an agile team to identify UX opportunities and solve product challenges through iterative design and prototyping. Improved onboarding, pricing, AI features, and SSO login, and collaborated with engineers to shape a scalable design system.")
+        (dict
+          "date" "2020 – 2022"
+          "role" "Product Designer at" "company" "Effectory"
+          "location" "Amsterdam, The Netherlands"
+          "desc" "Started Effectory’s Figma component library and teamed up with engineers to improve design–dev collaboration, aiming for a more scalable system. Contributed to their Employee Feedback Solutions by designing survey and reporting dashboards for small teams. Also helped grow the design team by supporting interviews and design assessments.")
+        (dict
+          "date" "2016 – 2020"
+          "role" "Visual Designer at" "company" "Yummygum"
+          "location" "Amsterdam, The Netherlands"
+          "desc" "Worked on a wide range of client projects—pushing creativity and quality, which laid the foundation for my design career. Collaborated with great clients like Spider Strategies, Employes, Hotelchamp, and FindHotel.")
+      }}
+      {{ range $roles }}
+        <div class="cv-role-row">
+          <div class="cv-role-date">{{ .date }}</div>
+          <div>
+            <p class="cv-role-title">{{ .role }} <span class="company">{{ .company }}</span></p>
+            <p class="cv-role-loc">{{ .location }}</p>
+            <p class="cv-role-desc">{{ .desc }}</p>
+          </div>
+        </div>
+      {{ end }}
+    </section>
+
+    <section class="cv-section">
+      <h2>Skills &amp; Tools</h2>
+      <ul class="cv-tags">
+        <li>Product Design</li>
+        <li>Design Systems</li>
+        <li>Prototyping</li>
+        <li>User Research</li>
+        <li>Interaction Design</li>
+        <li>Design–Dev Collaboration</li>
+        <li>Figma</li>
+        <li>HTML &amp; CSS</li>
+      </ul>
+    </section>
+
+    <section class="cv-section">
+      <h2>Education</h2>
+      <div class="cv-edu-row">
+        <div class="cv-edu-date">2012 – 2016</div>
+        <div>
+          <p class="cv-edu-title">Bachelor’s degree, Communication &amp; Multimedia Design</p>
+          <p class="cv-edu-sub">The Hague University of Applied Sciences, The Hague</p>
+        </div>
+      </div>
+      <div class="cv-edu-row">
+        <div class="cv-edu-date">2009 – 2012</div>
+        <div>
+          <p class="cv-edu-title">Multimedia Design</p>
+          <p class="cv-edu-sub">Nova College, Haarlem</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="cv-hint">Press ⌘P → Save as PDF (A4)</div>
+</body>
+</html>
