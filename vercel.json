@@ -1,6 +1,6 @@
 {
   "framework": "hugo",
-  "buildCommand": "hugo --gc --minify && npx --yes staticrypt public/work/supervised-mode/index.html -d public/work/supervised-mode",
+  "buildCommand": "hugo --gc --minify && npx --yes staticrypt public/work/supervised-mode/index.html -d public/work/supervised-mode --template staticrypt/template.html",
   "build": {
     "env": {
       "HUGO_VERSION": "0.124.1"
