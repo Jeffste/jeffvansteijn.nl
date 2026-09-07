@@ -6,7 +6,9 @@ description = "Trengo"
 image = "/images/preview-001@2x.png"
 bg = "#FAF9F5"
 label = "AI & Human Oversight"
-draft = true
+draft = false
+# Encrypted at build time via StatiCrypt (see vercel.json). Password: STATICRYPT_PASSWORD env var in Vercel.
+protected = true
 +++
 
 <div class="case-meta">

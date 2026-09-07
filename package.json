@@ -1,0 +1,10 @@
+{
+  "name": "jeffvansteijn.nl",
+  "private": true,
+  "engines": {
+    "node": "22.x"
+  },
+  "devDependencies": {
+    "staticrypt": "^3.5.0"
+  }
+}
