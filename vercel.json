@@ -1,6 +1,6 @@
 {
   "framework": "hugo",
-  "buildCommand": "hugo --gc --minify && (test -f public/work/supervised-mode/index.html && npx --yes staticrypt public/work/supervised-mode/index.html -d public/work/supervised-mode --template staticrypt/template.html || echo 'skip staticrypt: supervised-mode not built (draft)')",
+  "buildCommand": "hugo --gc --minify --cleanDestinationDir && (test -f public/work/supervised-mode/index.html && npx --yes staticrypt public/work/supervised-mode/index.html -d public/work/supervised-mode --template staticrypt/template.html || echo 'skip staticrypt: supervised-mode not built (draft)')",
   "build": {
     "env": {
       "HUGO_VERSION": "0.124.1"
