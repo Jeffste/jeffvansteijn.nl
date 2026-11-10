@@ -4,25 +4,28 @@
 <head>
 <meta charset="utf-8">
 <title>Work list rows — jeffvansteijn.nl</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:wght@600&display=swap">
 <style>
-  @font-face { font-family:"Tiempos"; src:url('https://www.jeffvansteijn.nl/TiemposHeadlineWeb-Semibold.woff2') format('woff2'); font-display:swap; }
   @font-face { font-family:"Inter"; src:url('https://www.jeffvansteijn.nl/InterVariable.woff2') format('woff2'); font-weight:100 900; font-display:swap; }
   * { box-sizing:border-box; }
   body { margin:0; font-family:"Inter",system-ui,sans-serif; background:#e9e7e1; padding:28px; }
   .frame { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
   .surface { border-radius:16px; padding:24px; }
-  .surface.light { --title:#000; --text:#615A47; --accent:#DC8638; --divider:#EBEBEB; --hover:#dcdcdc; --media:#efede6; background:#FDFDFB; }
-  .surface.dark  { --title:#fff; --text:#9C9C9C; --accent:#DC8638; --divider:#1F1F1F; --hover:#1a1a1a; --media:#222; background:#000; }
-  .surface h2 { font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:var(--text); opacity:0.7; margin:0 0 12px; font-weight:600; }
-  .work-wide-list { display:flex; flex-direction:column; border-top:1px solid var(--divider); }
-  .work-wide-link { display:block; text-decoration:none; color:inherit; }
-  .work-wide { display:flex; align-items:center; height:80px; border-bottom:1px solid var(--divider); overflow:hidden; background:transparent; transition:background 0.2s ease; }
+  .surface.light { --title:#141A16; --text:#4A5149; --accent:#2F6B4C; --hover:#EFECE4; --surface:#E8ECE4; --primary:#1E3A2C; --on-primary:#F7F5EF; background:#F7F5EF; }
+  .surface.dark  { --title:#F2F1EC; --text:#A3ABA5; --accent:#7FB894; --hover:#1A241F; --surface:#17201B; --primary:#B7D4C0; --on-primary:#0E1411; background:#0E1411; }
+  .surface h2 { font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:var(--text); margin:0 0 12px; font-weight:600; }
+  /* Mirrors styles.scss "WORK LIST — M1 Quiet". Radius: 12 (tile) = 4 (thumb) + 8 (padding). */
+  .work-wide-list { display:flex; flex-direction:column; gap:4px; }
+  .work-wide-link { display:block; text-decoration:none; color:inherit; border-radius:12px; }
+  .work-wide { display:flex; align-items:center; gap:16px; padding:8px; border-radius:12px; transition:background .2s ease; }
   .work-wide-link:hover .work-wide, .work-wide.is-hover { background:var(--hover); }
-  .work-wide-media { flex:0 0 96px; align-self:stretch; overflow:hidden; background:var(--media); }
+  .work-wide-media { flex:0 0 72px; height:56px; border-radius:4px; overflow:hidden; background:var(--surface); }
   .work-wide-media img { width:100%; height:100%; object-fit:cover; display:block; }
-  .work-wide-body { flex:1; min-width:0; padding:0 1.25rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
-  .work-wide-title { font-family:"Tiempos",Georgia,serif; font-size:1.05rem; line-height:1.2; color:var(--title); margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .work-wide-label { flex:none; font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent); font-weight:600; white-space:nowrap; }
+  .work-wide-body { flex:1; min-width:0; display:flex; flex-direction:column; gap:2px; }
+  .work-wide-title { font-family:"Newsreader",Georgia,serif; font-weight:600; font-size:1.125rem; line-height:1.25; color:var(--title); margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .work-wide-label { font-size:0.75rem; font-weight:500; color:var(--accent); white-space:nowrap; }
+  .work-wide-arrow { flex:none; width:36px; height:36px; border-radius:999px; display:flex; align-items:center; justify-content:center; background:var(--primary); color:var(--on-primary); opacity:0; transition:opacity .2s ease; }
+  .work-wide-link:hover .work-wide-arrow, .work-wide.is-hover .work-wide-arrow { opacity:1; }
 </style>
 </head>
 <body>
@@ -30,17 +33,17 @@
     <div class="surface light">
       <h2>Light · row 1 shows hover</h2>
       <div class="work-wide-list">
-        <a class="work-wide-link" href="#"><article class="work-wide is-hover"><div class="work-wide-media"><img src="https://www.jeffvansteijn.nl/images/preview-002@2x.png" alt=""></div><div class="work-wide-body"><h3 class="work-wide-title">Adding SLA metrics to Trengo</h3><span class="work-wide-label">SLAs &amp; Analytics</span></div></article></a>
-        <a class="work-wide-link" href="#"><article class="work-wide"><div class="work-wide-media"><img src="https://www.jeffvansteijn.nl/images/preview-001@2x.png" alt=""></div><div class="work-wide-body"><h3 class="work-wide-title">Supervised Mode: Putting Humans Back…</h3><span class="work-wide-label">AI &amp; Human Oversight</span></div></article></a>
-        <a class="work-wide-link" href="#"><article class="work-wide"><div class="work-wide-media"><img src="https://www.jeffvansteijn.nl/images/preview-003@2x.png" alt=""></div><div class="work-wide-body"><h3 class="work-wide-title">Redesigning Trengo’s Login Flow…</h3><span class="work-wide-label">Login &amp; SSO</span></div></article></a>
+        <a class="work-wide-link" href="#"><article class="work-wide is-hover"><div class="work-wide-media"><img src="https://www.jeffvansteijn.nl/images/preview-002@2x.png" alt=""></div><div class="work-wide-body"><h3 class="work-wide-title">Adding SLA metrics to Trengo</h3><span class="work-wide-label">SLAs &amp; Analytics</span></div><span class="work-wide-arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></article></a>
+        <a class="work-wide-link" href="#"><article class="work-wide"><div class="work-wide-media"><img src="https://www.jeffvansteijn.nl/images/preview-001@2x.png" alt=""></div><div class="work-wide-body"><h3 class="work-wide-title">Supervised Mode: Putting Humans Back in the AI Loop</h3><span class="work-wide-label">AI &amp; Human Oversight</span></div><span class="work-wide-arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></article></a>
+        <a class="work-wide-link" href="#"><article class="work-wide"><div class="work-wide-media"><img src="https://www.jeffvansteijn.nl/images/preview-003@2x.png" alt=""></div><div class="work-wide-body"><h3 class="work-wide-title">Redesigning Trengo’s Login Flow with Secure SSO Access</h3><span class="work-wide-label">Login &amp; SSO</span></div><span class="work-wide-arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></article></a>
       </div>
     </div>
     <div class="surface dark">
       <h2>Dark · row 1 shows hover</h2>
       <div class="work-wide-list">
-        <a class="work-wide-link" href="#"><article class="work-wide is-hover"><div class="work-wide-media"><img src="https://www.jeffvansteijn.nl/images/preview-002@2x.png" alt=""></div><div class="work-wide-body"><h3 class="work-wide-title">Adding SLA metrics to Trengo</h3><span class="work-wide-label">SLAs &amp; Analytics</span></div></article></a>
-        <a class="work-wide-link" href="#"><article class="work-wide"><div class="work-wide-media"><img src="https://www.jeffvansteijn.nl/images/preview-001@2x.png" alt=""></div><div class="work-wide-body"><h3 class="work-wide-title">Supervised Mode: Putting Humans Back…</h3><span class="work-wide-label">AI &amp; Human Oversight</span></div></article></a>
-        <a class="work-wide-link" href="#"><article class="work-wide"><div class="work-wide-media"><img src="https://www.jeffvansteijn.nl/images/preview-003@2x.png" alt=""></div><div class="work-wide-body"><h3 class="work-wide-title">Redesigning Trengo’s Login Flow…</h3><span class="work-wide-label">Login &amp; SSO</span></div></article></a>
+        <a class="work-wide-link" href="#"><article class="work-wide is-hover"><div class="work-wide-media"><img src="https://www.jeffvansteijn.nl/images/preview-002@2x.png" alt=""></div><div class="work-wide-body"><h3 class="work-wide-title">Adding SLA metrics to Trengo</h3><span class="work-wide-label">SLAs &amp; Analytics</span></div><span class="work-wide-arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></article></a>
+        <a class="work-wide-link" href="#"><article class="work-wide"><div class="work-wide-media"><img src="https://www.jeffvansteijn.nl/images/preview-001@2x.png" alt=""></div><div class="work-wide-body"><h3 class="work-wide-title">Supervised Mode: Putting Humans Back in the AI Loop</h3><span class="work-wide-label">AI &amp; Human Oversight</span></div><span class="work-wide-arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></article></a>
+        <a class="work-wide-link" href="#"><article class="work-wide"><div class="work-wide-media"><img src="https://www.jeffvansteijn.nl/images/preview-003@2x.png" alt=""></div><div class="work-wide-body"><h3 class="work-wide-title">Redesigning Trengo’s Login Flow with Secure SSO Access</h3><span class="work-wide-label">Login &amp; SSO</span></div><span class="work-wide-arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></article></a>
       </div>
     </div>
   </div>

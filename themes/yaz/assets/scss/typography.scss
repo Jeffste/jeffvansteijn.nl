@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------------
-// TYPOGRAPHY (Fonts: Tiempos & Inter)
+// TYPOGRAPHY (Fonts: Newsreader & Inter)
 // 4px grid-based scale
 // -----------------------------------------------------------------------------
 
@@ -23,7 +23,11 @@ dl, dd {
 :root {
   // Fonts
   --font-body: 'Inter', system-ui, sans-serif;
-  --font-heading: 'Tiempos', serif;
+  --font-heading: 'Newsreader', Georgia, serif;
+
+  // Corner radii. Nested rule: outer = inner + padding (4 + 8 = 12)
+  --radius-xs: 4px;
+  --radius-md: 12px;
 
   // Font sizes (clamp for responsive scaling)
   --font-size-sm: clamp(0.875rem, 0.85rem + 0.2vw, 0.95rem);    // 14–15px
