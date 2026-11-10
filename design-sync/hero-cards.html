@@ -1,0 +1,46 @@
+<!-- @dsCard group="Components" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Hero cards — jeffvansteijn.nl</title>
+<style>
+  @font-face { font-family:"Inter"; src:url('https://www.jeffvansteijn.nl/InterVariable.woff2') format('woff2'); font-weight:100 900; font-display:swap; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:"Inter",system-ui,sans-serif; background:#e9e7e1; padding:28px; }
+  .frame { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  .surface { border-radius:16px; padding:24px; }
+  .surface.light { --title:#000; --text:#615A47; --card:#FAF9F5; --media:#efe9df; background:#FDFDFB; }
+  .surface.dark  { --title:#fff; --text:#9C9C9C; --card:#111;    --media:#222;    background:#000; }
+  .surface h2 { font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:var(--text); opacity:0.7; margin:0 0 14px; font-weight:600; }
+  .hero-card-link { display:block; border-radius:16px; overflow:hidden; position:relative; text-decoration:none; color:inherit; background:var(--card); }
+  .hero-card { padding:2rem 1.5rem; display:flex; flex-direction:column; align-items:center; min-height:320px; text-align:center; }
+  .hero-card-image { width:85%; height:170px; border-radius:8px; object-fit:cover; background:var(--media); box-shadow:0 4px 12px rgba(0,0,0,0.08), 0 12px 40px rgba(0,0,0,0.12); margin-bottom:1.5rem; }
+  .hero-card-meta { display:flex; justify-content:space-between; align-items:baseline; gap:1rem; width:100%; margin-top:auto; font-size:13px; color:var(--title); }
+  .hero-card-label { font-weight:500; }
+  .hero-card-company { opacity:0.6; white-space:nowrap; }
+</style>
+</head>
+<body>
+  <div class="frame">
+    <div class="surface light">
+      <h2>Light</h2>
+      <a class="hero-card-link" href="#">
+        <div class="hero-card">
+          <img class="hero-card-image" src="https://www.jeffvansteijn.nl/images/preview-002@2x.png" alt="">
+          <div class="hero-card-meta"><span class="hero-card-label">SLAs &amp; Analytics</span><span class="hero-card-company">Trengo</span></div>
+        </div>
+      </a>
+    </div>
+    <div class="surface dark">
+      <h2>Dark</h2>
+      <a class="hero-card-link" href="#">
+        <div class="hero-card">
+          <img class="hero-card-image" src="https://www.jeffvansteijn.nl/images/preview-002@2x.png" alt="">
+          <div class="hero-card-meta"><span class="hero-card-label">SLAs &amp; Analytics</span><span class="hero-card-company">Trengo</span></div>
+        </div>
+      </a>
+    </div>
+  </div>
+</body>
+</html>

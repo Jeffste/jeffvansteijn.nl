@@ -1,0 +1,42 @@
+<!-- @dsCard group="Foundations" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Type — jeffvansteijn.nl</title>
+<style>
+  @font-face { font-family:"Tiempos"; src:url('https://www.jeffvansteijn.nl/TiemposHeadlineWeb-Semibold.woff2') format('woff2'); font-display:swap; }
+  @font-face { font-family:"Inter"; src:url('https://www.jeffvansteijn.nl/InterVariable.woff2') format('woff2'); font-weight:100 900; font-display:swap; }
+  :root {
+    --font-heading:"Tiempos",Georgia,serif;
+    --font-body:"Inter",system-ui,sans-serif;
+    --title:#000; --text:#615A47; --accent:#DC8638; --bg:#FDFDFB; --divider:#EBEBEB;
+    --fs-base:clamp(1rem,0.95rem + 0.2vw,1.125rem);
+    --fs-lg:clamp(1.25rem,1.1rem + 0.3vw,1.375rem);
+    --fs-xl:clamp(1.5rem,1.25rem + 0.6vw,1.75rem);
+    --fs-xxl:clamp(2.25rem,2rem + 1.2vw,2.5rem);
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:var(--font-body); padding:40px; max-width:720px; }
+  h1,h2,h3 { font-family:var(--font-heading); font-weight:600; color:var(--title); line-height:1.25; letter-spacing:-0.01em; margin:0 0 .4rem; }
+  h1 { font-size:var(--fs-xxl); margin-top:0; }
+  h2 { font-size:var(--fs-xl); margin-top:2rem; }
+  h3 { font-size:var(--fs-lg); margin-top:1.5rem; }
+  .eyebrow { font-size:11px; letter-spacing:0.14em; text-transform:uppercase; font-weight:600; color:var(--accent); display:block; margin-bottom:12px; }
+  p { font-size:var(--fs-base); line-height:1.65; max-width:62ch; }
+  blockquote { font-family:var(--font-heading); font-style:italic; font-size:var(--fs-lg); line-height:1.4; color:var(--title); margin:2rem 0 .5rem; padding:0; border:none; }
+  blockquote + p.attr { font-size:0.95rem; color:var(--text); margin-top:0; }
+  a.inline { color:inherit; text-decoration:underline; text-decoration-color:var(--divider); text-decoration-thickness:1px; text-underline-offset:3px; }
+  a.inline:hover { text-decoration-color:var(--accent); }
+</style>
+</head>
+<body>
+  <span class="eyebrow">Typography</span>
+  <h1>The quiet details people feel</h1>
+  <h2>Tiempos for headings, Inter for text</h2>
+  <h3>A responsive scale that settles into place</h3>
+  <p>Body copy runs in Inter at a responsive 16–18px with a generous 1.65 line-height — the difference between “blog” and “magazine.” Links carry a subtle underline that lights up in <a class="inline" href="#">accent orange</a> on hover.</p>
+  <blockquote>“Agents didn’t want fewer AI replies. They wanted to feel confident about the ones they let through.”</blockquote>
+  <p class="attr">— Senior agent, mid-market customer</p>
+</body>
+</html>

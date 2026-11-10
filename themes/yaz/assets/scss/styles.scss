@@ -925,6 +925,95 @@ footer p{
   gap: 1rem;
 }
 
+/* === WIDE WORK CARDS (/work/ overview) === */
+.work-wide-list {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem 0;
+  border-top: 1px solid var(--divider-color);
+}
+
+.work-wide-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.work-wide {
+  display: flex;
+  align-items: center;
+  height: 80px;
+  border-bottom: 1px solid var(--divider-color);
+  overflow: hidden;
+  background: transparent;
+  transition: background 0.2s ease;
+}
+
+.work-wide-link:hover .work-wide {
+  background: var(--hover-color);
+}
+
+.work-wide-media {
+  flex: 0 0 96px;
+  align-self: stretch;
+  overflow: hidden;
+}
+
+.work-wide-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  max-height: none;
+  border-radius: 0;
+}
+
+.work-wide-image.lqip {
+  filter: blur(12px);
+  transform: scale(1.05);
+  transition: filter 0.4s ease, transform 0.4s ease;
+}
+
+.work-wide-image.lqip.loaded {
+  filter: none;
+  transform: scale(1);
+}
+
+.work-wide-body {
+  flex: 1;
+  min-width: 0;
+  padding: 0 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.work-wide-title {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  line-height: 1.2;
+  color: var(--title-color);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.work-wide-label {
+  flex: none;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-color);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.work-wide-desc {
+  display: none;
+}
+
 /* === HERO CARDS (homepage) === */
 .hero-cards {
   display: grid;

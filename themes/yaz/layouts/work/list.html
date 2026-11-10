@@ -10,27 +10,29 @@
    
 
 
-    <section class="work-cards">
+    <section class="work-wide-list">
       {{ .Content }}
       {{ range .Pages.ByDate.Reverse }}
-        <a href="{{ .Permalink }}" class="work-card-link">
-          <article class="work-card">
-            {{ $imagePath := strings.TrimPrefix "/" .Params.image }}
-            {{ $img := resources.Get $imagePath }}
-            {{ if $img }}
-              {{ $lqip := $img.Resize "16x16 jpg q20" }}
-              <img
-                class="work-image lqip"
-                src="{{ (printf "data:image/jpeg;base64,%s" ($lqip.Content | base64Encode)) | safeURL }}"
-                data-src="{{ $img.RelPermalink }}"
-                alt="{{ .Title }}"
-              />
-            {{ else }}
-              <img class="work-image" src="{{ .Params.image }}" alt="{{ .Title }}" />
-            {{ end }}
-            <div class="work-content">
-              <h3>{{ .Title }}</h3>
-              <p>{{ .Params.description }}</p>
+        <a href="{{ .Permalink }}" class="work-wide-link" style="--card-bg: {{ .Params.bg | default "#fff" }};">
+          <article class="work-wide">
+            <div class="work-wide-media">
+              {{ $imagePath := strings.TrimPrefix "/" .Params.image }}
+              {{ $img := resources.Get $imagePath }}
+              {{ if $img }}
+                {{ $lqip := $img.Resize "16x16 jpg q20" }}
+                <img
+                  class="work-wide-image lqip"
+                  src="{{ (printf "data:image/jpeg;base64,%s" ($lqip.Content | base64Encode)) | safeURL }}"
+                  data-src="{{ $img.RelPermalink }}"
+                  alt="{{ .Title }}"
+                />
+              {{ else }}
+                <img class="work-wide-image" src="{{ .Params.image }}" alt="{{ .Title }}" />
+              {{ end }}
+            </div>
+            <div class="work-wide-body">
+              <h3 class="work-wide-title">{{ .Title }}</h3>
+              {{ with .Params.label }}<span class="work-wide-label">{{ . }}</span>{{ end }}
             </div>
           </article>
         </a>
