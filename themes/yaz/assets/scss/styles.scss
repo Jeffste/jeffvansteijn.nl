@@ -47,6 +47,7 @@
   --on-primary-color: #{$color-light-on-primary};
   --accent-color: #{$color-light-accent};
   --divider-color: #{$color-light-divider};
+  --border-color: #{$color-light-border};
   --hover-color: #{$color-light-hover};
   --card-color: #{$color-light-card};
 }
@@ -61,6 +62,7 @@
   --on-primary-color: #{$color-dark-on-primary};
   --accent-color: #{$color-dark-accent};
   --divider-color: #{$color-dark-divider};
+  --border-color: #{$color-dark-border};
   --hover-color: #{$color-dark-hover};
   --card-color: #{$color-dark-card};
 }
@@ -241,6 +243,9 @@ body {
 }
 
 
+/* === Background texture: "T3 Riso print" ===
+   Coarse grey grain (like risograph paper) over a soft light glow that drifts.
+   Glow sits *under* the grain (z -2 vs -1) so the grain stays visible everywhere. */
 .noise {
   position: fixed;
   top: 0;
@@ -249,42 +254,33 @@ body {
   height: 100%;
   pointer-events: none;
   z-index: -1;
-  opacity: 0.35; // was 0.7: at that strength the grain turned the #F7F5EF paper into ~#EAE9E5 grey
+  opacity: 0.3;
 }
 
 .noise::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.3'/%3E%3C/svg%3E");
+    // fractalNoise at 0.5 / 2 octaves = coarser grain; saturate 0 = grey, so the warm paper stays warm
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.3'/%3E%3C/svg%3E");
     pointer-events: none;
 }
 
-
-/* === Ambient gradient blob + noise reveal === */
 .blob {
     position: fixed;
     top: -200px;
     left: -200px;
     width: 800px;
     height: 800px;
-    z-index: 0;
+    z-index: -2;
     pointer-events: none;
-    background-image:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cfilter id='blobnoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23blobnoise)' opacity='0.35'/%3E%3C/svg%3E"),
-        radial-gradient(circle at center, rgba(0, 0, 0, 0.05), transparent 70%);
-    -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 68%);
-    mask-image: radial-gradient(circle at center, black 0%, transparent 68%);
-    opacity: 0.55;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.75), transparent 70%);
     animation: blob-drift 75s ease-in-out infinite alternate;
     will-change: transform;
 }
 
 html.dark .blob {
-    background-image:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cfilter id='blobnoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23blobnoise)' opacity='0.35'/%3E%3C/svg%3E"),
-        radial-gradient(circle at center, rgba(255, 255, 255, 0.06), transparent 70%);
-    opacity: 0.45;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05), transparent 70%);
 }
 
 @keyframes blob-drift {
@@ -1314,14 +1310,61 @@ html.dark .hero-card-link::after {
 
 
 
-  .back-button{
-   position: relative;
-    padding: 12px 20px;
-    background-color: var(--divider-color);
-    color: var(--title-color);
-    text-decoration: none;
-    border-radius: 40px;
-  }
+/* === BUTTONS (Forest direction) ===
+   Inter 500 · 15px · 44px tall · 10px radius.
+   .btn-primary   forest fill (light) / sage fill (dark)
+   .btn-secondary 1px outline, transparent
+   Use the classes on <a> or <button>. */
+.btn,
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0 20px;
+  border-radius: 10px;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
+}
+
+.btn:hover,
+.back-button:hover {
+  opacity: 1; // override the global a:hover fade
+}
+
+.btn:focus-visible,
+.back-button:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: var(--on-primary-color);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+}
+
+.btn-secondary,
+.back-button {
+  background-color: transparent;
+  color: var(--title-color);
+  box-shadow: inset 0 0 0 1px var(--border-color);
+}
+
+.btn-secondary:hover,
+.back-button:hover {
+  background-color: var(--hover-color);
+}
 
 
 
@@ -1457,6 +1500,14 @@ img[src$='#float-right-40'] {
 	outline: inherit;
 }
 
+// The reset above strips the outline; give keyboard users a visible focus ring back.
+button:focus-visible,
+input[type="submit"]:focus-visible,
+input[type="reset"]:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
 svg.icon-external {
   opacity: 100;
   transform: translateX(6px);
@@ -1482,30 +1533,33 @@ svg.icon-external {
   display: flex;
   margin-bottom: 1.5rem;
   flex-wrap: wrap;
+  gap: var(--space-2);
 }
 
+// Filter chips use the secondary button; the active one becomes primary.
 .finds-filter {
-  // background: var(--base-color);
-  color: var(--text-color);
-  border: none;
-  border-radius: 999px;
-  padding: 6px 12px;
-  cursor: pointer;
-  // align-items: center;
-  gap: 0.5rem;
-  font-size: 0.9rem;
-  transition: background 0.2s;
-  margin-right: 8px;
-  // position: sticky;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 10px;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--title-color);
+  box-shadow: inset 0 0 0 1px var(--border-color);
+  transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .finds-filter:hover {
-  color: var(--title-color);
+  background-color: var(--hover-color);
 }
 
 .finds-filter.active {
-  background: var(--divider-color);
-  color: var(--text-color);
+  background-color: var(--primary-color);
+  color: var(--on-primary-color);
+  box-shadow: none;
 }
 
 .finds-list {

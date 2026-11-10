@@ -11,6 +11,7 @@ $color-light-primary-hover: #142A1F;
 $color-light-on-primary: #F7F5EF;    // text/icons on primary
 $color-light-accent: #2F6B4C;        // labels, links
 $color-light-divider: #E2E3DB;
+$color-light-border: #CDD3C8;        // secondary button outline
 $color-light-hover: rgba(20, 26, 22, 0.06);    // translucent ink: darkens whatever is below, incl. the noise texture
 $color-light-card: #FFFFFF;
 
@@ -24,5 +25,6 @@ $color-dark-primary-hover: #CFE3D5;
 $color-dark-on-primary: #0E1411;
 $color-dark-accent: #7FB894;
 $color-dark-divider: #233029;
+$color-dark-border: #34433A;
 $color-dark-hover: rgba(242, 241, 236, 0.07);  // translucent light on dark
 $color-dark-card: #131B17;
