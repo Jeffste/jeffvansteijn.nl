@@ -1,18 +1,28 @@
 // _variables.scss
+// Forest + Newsreader direction. One brand colour (forest green), no orange.
 
-// Define color variables for light and dark themes
-$color-light-base: #FDFDFB;
-$color-light-title: #000;
-$color-light-text: #615A47;
-$color-light-accent: #DC8638;
-$color-light-divider: #EBEBEB;
-$color-light-hover: #dcdcdc;
-$color-light-card: #fff;
+// Light theme
+$color-light-base: #F7F5EF;          // warm paper
+$color-light-surface: #E8ECE4;       // green-grey tint for cards, tags, placeholders
+$color-light-title: #141A16;
+$color-light-text: #4A5149;
+$color-light-primary: #1E3A2C;       // forest: primary buttons, hover arrow
+$color-light-primary-hover: #142A1F;
+$color-light-on-primary: #F7F5EF;    // text/icons on primary
+$color-light-accent: #2F6B4C;        // labels, links
+$color-light-divider: #E2E3DB;
+$color-light-hover: #EFECE4;         // row hover tile (paper, one step darker)
+$color-light-card: #FFFFFF;
 
-$color-dark-base: #000000;
-$color-dark-title: #fff;
-$color-dark-text: #9C9C9C;
-$color-dark-accent: #DC8638;
-$color-dark-divider: #1F1F1F;
-$color-dark-hover: #1a1a1a;
-$color-dark-card: #111111;
+// Dark theme
+$color-dark-base: #0E1411;
+$color-dark-surface: #17201B;
+$color-dark-title: #F2F1EC;
+$color-dark-text: #A3ABA5;
+$color-dark-primary: #B7D4C0;        // primary turns light on dark
+$color-dark-primary-hover: #CFE3D5;
+$color-dark-on-primary: #0E1411;
+$color-dark-accent: #7FB894;
+$color-dark-divider: #233029;
+$color-dark-hover: #1A241F;
+$color-dark-card: #131B17;

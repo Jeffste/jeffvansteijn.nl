@@ -14,6 +14,22 @@
 }
 
 @font-face {
+    font-family: "Newsreader";
+    src: url('/NewsreaderVariable.woff2') format('woff2');
+    font-weight: 200 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Newsreader";
+    src: url('/NewsreaderVariable-Italic.woff2') format('woff2');
+    font-weight: 200 800;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
     font-family: "Inter";
     src: url('/InterVariable.woff2') format('woff2');
     font-weight: 100 900;
@@ -23,8 +39,12 @@
 // Define mixins for theme
 @mixin light-theme {
   --base-color: #{$color-light-base};
+  --surface-color: #{$color-light-surface};
   --title-color: #{$color-light-title};
   --text-color: #{$color-light-text};
+  --primary-color: #{$color-light-primary};
+  --primary-hover: #{$color-light-primary-hover};
+  --on-primary-color: #{$color-light-on-primary};
   --accent-color: #{$color-light-accent};
   --divider-color: #{$color-light-divider};
   --hover-color: #{$color-light-hover};
@@ -33,8 +53,12 @@
 
 @mixin dark-theme {
   --base-color: #{$color-dark-base};
+  --surface-color: #{$color-dark-surface};
   --title-color: #{$color-dark-title};
   --text-color: #{$color-dark-text};
+  --primary-color: #{$color-dark-primary};
+  --primary-hover: #{$color-dark-primary-hover};
+  --on-primary-color: #{$color-dark-on-primary};
   --accent-color: #{$color-dark-accent};
   --divider-color: #{$color-dark-divider};
   --hover-color: #{$color-dark-hover};
@@ -378,7 +402,7 @@ figcaption{
 }
 
 a.external {
-  color: #DC8638; /* jouw accentkleur */
+  color: var(--accent-color);
 }
 
 
@@ -925,38 +949,54 @@ footer p{
   gap: 1rem;
 }
 
-/* === WIDE WORK CARDS (/work/ overview) === */
+/* === WORK LIST (/work/ overview) — "M1 Quiet" ===
+   No dividers. Each row is a rounded tile that only shows on hover/focus.
+   Nested radius: tile (--radius-md 12) = thumbnail (--radius-xs 4) + padding (8). */
 .work-wide-list {
   display: flex;
   flex-direction: column;
+  gap: var(--space-1);
   margin: 2rem 0;
-  border-top: 1px solid var(--divider-color);
 }
 
 .work-wide-link {
   display: block;
   text-decoration: none;
   color: inherit;
+  border-radius: var(--radius-md);
+}
+
+// The global `a:hover { opacity: .7 }` would fade the whole row; the tile is the hover cue here.
+.work-wide-link:hover {
+  opacity: 1;
+}
+
+.work-wide-link:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
 }
 
 .work-wide {
   display: flex;
   align-items: center;
-  height: 80px;
-  border-bottom: 1px solid var(--divider-color);
-  overflow: hidden;
+  gap: var(--space-4);
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
   background: transparent;
   transition: background 0.2s ease;
 }
 
-.work-wide-link:hover .work-wide {
+.work-wide-link:hover .work-wide,
+.work-wide-link:focus-visible .work-wide {
   background: var(--hover-color);
 }
 
 .work-wide-media {
-  flex: 0 0 96px;
-  align-self: stretch;
+  flex: 0 0 72px;
+  height: 56px;
+  border-radius: var(--radius-xs);
   overflow: hidden;
+  background: var(--surface-color);
 }
 
 .work-wide-image {
@@ -982,32 +1022,72 @@ footer p{
 .work-wide-body {
   flex: 1;
   min-width: 0;
-  padding: 0 1.25rem;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .work-wide-title {
   font-family: var(--font-heading);
-  font-size: 1.05rem;
-  line-height: 1.2;
+  font-weight: 600;
+  font-size: 1.125rem;
+  line-height: 1.25;
+  letter-spacing: 0;
   color: var(--title-color);
   margin: 0;
+  max-width: none;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .work-wide-label {
-  flex: none;
-  font-size: 0.7rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: 500;
   color: var(--accent-color);
-  font-weight: 600;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.work-wide-arrow {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-color);
+  color: var(--on-primary-color);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.work-wide-link:hover .work-wide-arrow,
+.work-wide-link:focus-visible .work-wide-arrow {
+  opacity: 1;
+  transform: none;
+}
+
+// Phones: titles wrap to two lines instead of truncating; the hover arrow gives up its space.
+@media (max-width: 600px) {
+  .work-wide-title {
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+  .work-wide-arrow {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-wide,
+  .work-wide-arrow { transition: none; }
+  .work-wide-arrow { transform: none; }
 }
 
 .work-wide-desc {
