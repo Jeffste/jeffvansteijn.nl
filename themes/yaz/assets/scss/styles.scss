@@ -50,6 +50,7 @@
   --border-color: #{$color-light-border};
   --hover-color: #{$color-light-hover};
   --card-color: #{$color-light-card};
+  --header-glass: rgba(247, 245, 239, 0.72);  // base @ 72%, for the frosted nav pill
 }
 
 @mixin dark-theme {
@@ -65,6 +66,7 @@
   --border-color: #{$color-dark-border};
   --hover-color: #{$color-dark-hover};
   --card-color: #{$color-dark-card};
+  --header-glass: rgba(14, 20, 17, 0.68);  // base @ 68%, for the frosted nav pill
 }
 
 .scroll-smooth {
@@ -569,65 +571,107 @@ margin-top: 32px;
 }
 
 
+// Header: a flat bar on the page at rest; on scroll it morphs into a frosted floating pill.
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
+    gap: var(--space-4);
+    height: 56px;
+    margin: 0 0 2rem;
+    padding: 0;
     color: var(--text-color);
-    border-bottom: 1px solid var(--divider-color);
-    transition: background-color 0.3s ease, top 0.3s ease;
-    height: 64px;
+    background: transparent;
+    border: 1px solid transparent;            /* kept at 1px so the pill border fades in, not pops */
+    border-bottom-color: var(--divider-color);
+    border-radius: 0;
+    box-shadow: none;
+    transition: background 0.25s ease, box-shadow 0.25s ease, border-radius 0.25s ease,
+                padding 0.25s ease, border-color 0.25s ease, top 0.25s ease,
+                -webkit-backdrop-filter 0.25s ease, backdrop-filter 0.25s ease;
 }
 
-header.header-scrolled {
-    border-radius: 16px;
+header.sticky { top: 0; }
+
+// Scrolled: the floating glass pill.
+header.is-stuck {
     top: 12px;
-    padding-left: 16px;
-    padding-right: 16px;
-    margin-left: -16px;
-    margin-right: -16px;
-    border-bottom: 0;
-    backdrop-filter: blur(80px);
-    -webkit-backdrop-filter: blur(80px);
+    padding: 0 var(--space-2) 0 var(--space-5);   /* 20px left · 8px right (toggle nests in) */
+    background: var(--header-glass);
+    border-color: var(--divider-color);
+    border-radius: 999px;
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.07);
 }
 
-header.header-scrolled::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: -1;
+html.dark header.is-stuck {
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.28);
 }
 
-header h4 {
-    margin: 0;
+@media (prefers-reduced-motion: reduce) {
+    header { transition: none; }
+}
+
+header .brand {
     font-family: var(--font-heading);
     font-weight: 600;
+    font-size: 1.25rem;
     letter-spacing: -0.01em;
+    line-height: 1;
+    color: var(--title-color);
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+header .brand:hover {
+    opacity: 1;
 }
 
 header a {
     text-decoration: none;
-    font-weight: 500;
-    color: var(--title-color);
 }
 
-header ul {
-    list-style-type: none;
+.mainmenu {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
     margin: 0;
+    padding: 0;
+    list-style: none;
+    min-width: 0;
 }
 
-header li, header a {
-    display: inline;
+.mainmenu-link {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--text-color);
+    white-space: nowrap;
+    transition: color 0.15s ease;
 }
 
-header ul a:first-child {
-    padding-left: 1rem;
+.mainmenu-link:hover {
+    color: var(--title-color);
+    opacity: 1;
+}
+
+.mainmenu-link.active {
+    color: var(--accent-color);
 }
 
 #theme-toggle {
-    margin-left: 1rem;
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    margin-left: var(--space-1);
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--text-color);
+    cursor: pointer;
 }
 
 h2.post {
@@ -1517,9 +1561,7 @@ svg.icon-external {
 
 
 
-.mainmenu a{
-  color: inherit;
-}
+/* Link colours are set on .mainmenu-link (base / hover / active) above. */
 
 
 #theme-toggle:hover {
