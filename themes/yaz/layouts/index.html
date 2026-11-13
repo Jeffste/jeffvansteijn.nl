@@ -46,27 +46,25 @@
       </section>
 
       <div class="about-row section-row">
-        <span class="section-row__label">About</span>
         <p class="section-row__text">I’m a product designer at Trengo, working on communication tools for support and sales teams. I enjoy understanding problems and designing solutions that work for both the customer and the business. Outside work, you’ll find me with my three kids, in the garden, or in a shed full of bikes waiting for the next rebuild.</p>
       </div>
 
-      {{ if gt (len ( where .Site.RegularPages "Section" "posts" )) 0 }}
-      <section class="writing section-row">
-        <h2 class="section-row__label">Writing</h2>
-        <ul class="list">
-          {{ range (first 3 (where .Site.RegularPages "Section" "posts").ByDate.Reverse) }}
-            <li>
-              <a class="list-link" href="{{ .Permalink }}" title="{{ .Title }}">
-                <span class="list-title">{{ .Title }}</span>
-                <span class="list-divider"></span>
-                <time class="list-date" datetime="{{ dateFormat "2006-01-02" .Date }}">
-                  {{ dateFormat "January 2, 2006" .Date }}
-                </time>
-              </a>
-            </li>
+      {{ $posts := where .Site.RegularPages "Section" "posts" }}
+      {{ if $posts }}
+      {{/* "Lately" — the latest 6 entries; rows come from partials/dump-entry.html,
+           shared with the /posts/ archive (layouts/posts/list.html). */}}
+      <section class="dump section-row" aria-label="Lately">
+        <div class="dump-wrap">
+          <div class="dump-list">
+            {{ range (first 6 $posts.ByDate.Reverse) }}{{ partial "dump-entry.html" . }}{{ end }}
+          </div>
+          {{ if gt (len $posts) 6 }}
+          <a class="dump-archive" href="/posts/">Archive →</a>
           {{ end }}
-        </ul>
+        </div>
       </section>
+      {{ partial "dump-lightbox.html" . }}
+      {{ end }}
 
       {{/* Experience timeline — see design_handoff_experience_timeline/README.md.
            Colours and type come from the site tokens so it works in light and dark.
@@ -95,32 +93,23 @@
       <section class="timeline">
         <ol class="timeline__entries">
           {{ range $roles }}
-            <li class="tl-entry">
-              <div class="tl-date">{{ .date }}</div>
-              <div class="tl-marker" aria-hidden="true">
-                <span class="tl-dot-gap"></span>
-                <span class="tl-dot{{ if .live }} tl-dot--live{{ end }}"></span>
+            <li class="tl-entry{{ if .live }} tl-entry--current{{ end }}">
+              <div class="tl-date">{{ if .live }}<span class="tl-live" aria-hidden="true"></span>{{ end }}{{ .date }}</div>
+              <div class="tl-head">
+                {{/* Inlined so the white marks can be recoloured per brand via CSS. */}}
+                {{ $bg := .logoBg }}{{ $fg := .logoFg }}
+                {{ with resources.Get .logo }}
+                  <span class="tl-logo" style="--tl-logo-bg: {{ $bg }}; --tl-logo-fg: {{ $fg }};" aria-hidden="true">{{ .Content | safeHTML }}</span>
+                {{ end }}
+                <h3 class="tl-title">{{ .role }}
+                  <a class="external tl-company" href="{{ .url }}" target="_blank" rel="noopener noreferrer">{{ .company }}<svg class="icon-external" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M11 8H10V2.70703L1.35352 11.3535L0.646484 10.6465L9.29297 2H4V1H11V8Z" fill="currentColor"/></svg></a>
+                </h3>
               </div>
-              <div class="tl-body">
-                <div class="tl-title-row">
-                  {{/* Inlined so the white marks can be recoloured per brand via CSS.
-                       Colours captured here: inside `with`, the dot is the resource. */}}
-                  {{ $bg := .logoBg }}{{ $fg := .logoFg }}
-                  {{ with resources.Get .logo }}
-                    <span class="tl-logo" style="--tl-logo-bg: {{ $bg }}; --tl-logo-fg: {{ $fg }};" aria-hidden="true">{{ .Content | safeHTML }}</span>
-                  {{ end }}
-                  <h3 class="tl-title">{{ .role }}
-                    <a class="external tl-company" href="{{ .url }}" target="_blank" rel="noopener noreferrer">{{ .company }}<svg class="icon-external" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M11 8H10V2.70703L1.35352 11.3535L0.646484 10.6465L9.29297 2H4V1H11V8Z" fill="currentColor"/></svg></a>
-                  </h3>
-                </div>
-                <p class="tl-desc">{{ .desc }}</p>
-                {{/* Pin from assets/images/location.svg, inlined with currentColor so it
-                     inherits the text colour — the source file has a hardcoded light grey
-                     that would be invisible in light mode. Matches .icon-external. */}}
-                <div class="tl-location">
-                  <svg class="icon-location" width="8" height="11" viewBox="0 0 8 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path fill-rule="evenodd" clip-rule="evenodd" d="M4 0C6.20914 0 8 1.79086 8 4C8 6.20914 5.20914 11 4 11C2.79086 11 0 6.20914 0 4C0 1.79086 1.79086 0 4 0ZM4 2C2.89543 2 2 2.89543 2 4C2 5.10457 2.89543 6 4 6C5.10457 6 6 5.10457 6 4C6 2.89543 5.10457 2 4 2Z" fill="currentColor"/></svg>
-                  <span>{{ .location }}</span>
-                </div>
+              <p class="tl-desc">{{ .desc }}</p>
+              {{/* Pin from assets/images/location.svg, inlined with currentColor. */}}
+              <div class="tl-location">
+                <svg class="icon-location" width="8" height="11" viewBox="0 0 8 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path fill-rule="evenodd" clip-rule="evenodd" d="M4 0C6.20914 0 8 1.79086 8 4C8 6.20914 5.20914 11 4 11C2.79086 11 0 6.20914 0 4C0 1.79086 1.79086 0 4 0ZM4 2C2.89543 2 2 2.89543 2 4C2 5.10457 2.89543 6 4 6C5.10457 6 6 5.10457 6 4C6 2.89543 5.10457 2 4 2Z" fill="currentColor"/></svg>
+                <span>{{ .location }}</span>
               </div>
             </li>
           {{ end }}
@@ -128,7 +117,6 @@
 
       </section>
         {{ partial "footer.html" . }}
-      {{ end }}
   </main>
 
   <script>

@@ -2,6 +2,7 @@
 title = 'Restoring an old road bike'
 date = 2024-05-06T22:15:48+02:00
 summary = 'In this post, I’ll take you along on my first bike restoration journey. When I discovered an old Raleigh hidden away in a shed, I saw an opportunity to learn, restore, and possibly make a small profit. '
+image = "/images/raleigh-color.png"
 +++
 
 

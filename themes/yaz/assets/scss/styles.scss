@@ -51,6 +51,8 @@
   --hover-color: #{$color-light-hover};
   --card-color: #{$color-light-card};
   --header-glass: rgba(247, 245, 239, 0.72);  // base @ 72%, for the frosted nav pill
+  --beneath: #16301f;                          // forest "under" the paper, seen on overscroll
+  --on-beneath: rgba(247, 245, 239, 0.72);
 }
 
 @mixin dark-theme {
@@ -67,6 +69,8 @@
   --hover-color: #{$color-dark-hover};
   --card-color: #{$color-dark-card};
   --header-glass: rgba(14, 20, 17, 0.68);  // base @ 68%, for the frosted nav pill
+  --beneath: #16271d;                      // forest "under" the paper, seen on overscroll
+  --on-beneath: rgba(242, 241, 236, 0.62);
 }
 
 .scroll-smooth {
@@ -113,7 +117,7 @@
    Shared by About and Writing so both align to exactly the same columns. */
 .section-row {
   display: grid;
-  grid-template-columns: 80px 1fr;
+  grid-template-columns: 1fr;   /* labels removed: content runs the full column */
   gap: var(--space-8);
   align-items: start;
 }
@@ -157,9 +161,126 @@
   margin-bottom: 120px;
 }
 
-.writing{
-  margin-top: 240px;
-  margin-bottom: 240px;
+/* === "Lately" dump: typed stream of notes, experiments, photos, links === */
+.dump-wrap { min-width: 0; }
+
+.dump-row {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;   /* thumbnail sits on the optical centre of the kind/title/date block */
+  padding: 15px 0;
+  text-decoration: none;
+  color: inherit;
+}
+
+.dump-row + .dump-row {
+  border-top: 1px solid var(--divider-color);
+}
+
+a.dump-row:hover { opacity: 1; }           /* override the global a:hover fade */
+.dump-row--photo { cursor: zoom-in; }
+.dump-row--note  { cursor: default; }
+
+.dump-body { flex: 1; min-width: 0; }
+
+.dump-kind {
+  display: block;
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+  color: var(--accent-color);
+  margin-bottom: 3px;
+}
+
+.dump-say {
+  color: var(--title-color);
+  font-size: var(--font-size-sm);
+  line-height: 1.45;
+  transition: color 0.15s ease;
+}
+
+.dump-arrow {
+  display: inline-block;
+  margin-left: 5px;
+  font-size: 0.75rem;
+  color: var(--text-color);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.15s ease, transform 0.15s ease, color 0.15s ease;
+}
+
+.dump-when {
+  display: block;
+  margin-top: 5px;
+  font-size: 0.75rem;
+  color: var(--text-color);
+  opacity: 0.55;
+  font-variant-numeric: tabular-nums;
+}
+
+.dump-thumb {
+  width: 64px;
+  height: 64px;
+  flex: none;
+  border-radius: 8px;
+  object-fit: cover;
+  background: var(--surface-color);
+  display: block;
+  transition: transform 0.18s ease;
+}
+
+a.dump-row:hover .dump-say { color: var(--accent-color); }
+a.dump-row:hover .dump-arrow { opacity: 1; transform: none; color: var(--accent-color); }
+.dump-row--photo:hover .dump-thumb { transform: scale(1.04); }
+
+.dump-archive {
+  display: inline-block;
+  margin-top: 18px;
+  font-size: var(--font-size-sm);
+  color: var(--text-color);
+  text-decoration: none;
+}
+.dump-archive:hover { color: var(--accent-color); opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .dump-arrow, .dump-thumb, .dump-say { transition: none; }
+  .dump-arrow { transform: none; }
+}
+
+/* Photo lightbox */
+.dump-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 5vmin;
+  background: rgba(10, 14, 12, 0.72);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+.dump-lightbox.open { display: flex; }
+.dump-lightbox img { max-width: 100%; max-height: 100%; border-radius: 12px; }
+
+.writing,
+.dump {
+  margin-top: 160px;
+  margin-bottom: 160px;
+}
+
+@media (max-width: 600px) {
+  .writing,
+  .dump {
+    margin-top: 96px;
+    margin-bottom: 96px;
+  }
+}
+
+/* On /posts/ the list follows the intro paragraph directly. */
+.dump.dump--archive {
+  margin-top: var(--space-10);
+  margin-bottom: var(--space-12);
 }
 
 
@@ -220,7 +341,7 @@ section.cv > ul li em{
 
 html{
   scroll-behavior: smooth;
-
+  background-color: var(--beneath);   // revealed in the overscroll / rubber-band zone
 }
 
 // Apply themes to html
@@ -236,6 +357,8 @@ html.dark {
 body {
     font-weight: 400;
     margin: 0;
+    position: relative;   // anchors the background layers to the page, so overscroll shows clean --beneath
+    z-index: 0;           // own stacking context so the negative-z background layers sit above the paper
     color: var(--text-color);
     padding: 0rem 2rem 2rem 2rem;
     background-color: var(--base-color);
@@ -245,56 +368,33 @@ body {
 }
 
 
-/* === Background texture: "T3 Riso print" ===
-   Coarse grey grain (like risograph paper) over a soft light glow that drifts.
-   Glow sits *under* the grain (z -2 vs -1) so the grain stays visible everywhere. */
-.noise {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: -1;
-  opacity: 0.3;
-}
-
-.noise::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    // fractalNoise at 0.5 / 2 octaves = coarser grain; saturate 0 = grey, so the warm paper stays warm
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.3'/%3E%3C/svg%3E");
-    pointer-events: none;
-}
-
+/* === Background: grainy gradient wash ===
+   A warm tonal wash fades in from the top (.blob), with fine paper grain blended
+   over it via soft-light (.noise). Both are fixed, behind the content. */
 .blob {
-    position: fixed;
-    top: -200px;
-    left: -200px;
-    width: 800px;
-    height: 800px;
+    position: absolute;   // bounded to the page (body), not the viewport, so it never covers the overscroll
+    inset: 0;
     z-index: -2;
     pointer-events: none;
-    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.75), transparent 70%);
-    animation: blob-drift 75s ease-in-out infinite alternate;
-    will-change: transform;
+    background: linear-gradient(180deg, rgba(223, 212, 189, 0.22), transparent 62%);
 }
 
 html.dark .blob {
-    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05), transparent 70%);
+    background: linear-gradient(180deg, rgba(40, 92, 62, 0.22), transparent 64%);
 }
 
-@keyframes blob-drift {
-    0%   { transform: translate(0, 0) scale(1); }
-    25%  { transform: translate(60vw, 10vh) scale(1.15); }
-    50%  { transform: translate(50vw, 55vh) scale(0.9); }
-    75%  { transform: translate(5vw, 60vh) scale(1.1); }
-    100% { transform: translate(30vw, 20vh) scale(1); }
+.noise {
+    position: absolute;   // bounded to the page (body) so the grain never reaches the overscroll zone
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    mix-blend-mode: soft-light;   // embeds the grain in the paper instead of sitting on top
+    // fine fractal grain: baseFrequency 0.6 / 3 octaves, desaturated to grey
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E");
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .blob { animation: none; }
+html.dark .noise {
+    opacity: 0.85;
 }
 
 
@@ -334,19 +434,6 @@ html.dark .blob {
 }
 
 
-
-
-.backgroundnoise{
-    position:fixed;
-    width:100%;
-    height:100%;
-    background-image: url('/images/texture.png');
-    background-repeat: repeat;
-    background-size: 180px 100px;
-/*    mix-blend-mode: color-dodge;*/
-    opacity: 0.5;
-    left:0;
-}
 
 
 #main{
@@ -602,11 +689,6 @@ header.is-stuck {
     border-radius: 999px;
     -webkit-backdrop-filter: blur(16px);
     backdrop-filter: blur(16px);
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.07);
-}
-
-html.dark header.is-stuck {
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.28);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -627,6 +709,12 @@ header .brand {
 header .brand:hover {
     opacity: 1;
 }
+
+/* Optical centring: box-centred text sits low because the lowercase body (x-height)
+   is below the box centre. Lift logo + links onto one shared baseline whose
+   x-height centre lands on the bar's centre line. */
+header .brand { transform: translateY(-0.75px); }
+.mainmenu-link { transform: translateY(-1.25px); }
 
 header a {
     text-decoration: none;
@@ -1921,89 +2009,63 @@ display: none;}
    site's theme tokens so the section works in both light and dark. Only the
    "live" green is a literal brand value — it has no equivalent token. */
 .timeline {
-  --tl-date-col: 96px;   /* col 1: date label            */
-  --tl-rail-col: 64px;   /* col 2: rail + dot            */
-  --tl-dot-x: 20px;      /* dot centre within col 2      */
-  --tl-dot: 10px;
-  --tl-dot-gap: 18px;    /* bg-coloured mask behind dot  */
   --tl-live: #3FB950;
-
   margin-top: 120px;
 }
 
 .timeline__entries {
-  position: relative;
   list-style: none;
   margin: 0;
   padding: 0;
   max-width: none;
 }
 
-/* Vertical rail, centred on the dots. Starts at the top dot's centre. */
-.timeline__entries::before {
-  content: "";
-  position: absolute;
-  left: calc(var(--tl-date-col) + var(--tl-dot-x));
-  transform: translateX(-50%);
-  top: 12px;
-  bottom: 0;
-  width: 2px;
-  border-radius: 1px;
-  /* Derived from the text colour rather than --divider-color: the divider token
-     is near-white in light and near-black in dark, so it vanishes at one end. */
-  background: var(--text-color);
-  opacity: 0.22;
-}
-
+/* Every entry shares one left text edge; the chip leads the title. */
 .tl-entry {
-  display: grid;
-  grid-template-columns: var(--tl-date-col) var(--tl-rail-col) 1fr;
-  margin-bottom: 72px;
+  padding: 22px 26px;
 }
 
-.tl-entry:last-child {
-  margin-bottom: 56px;
+/* Current role: a clean card — no colour fill. */
+.tl-entry--current {
+  background: var(--card-color);
+  border: 1px solid var(--divider-color);
+  border-radius: 18px;
+}
+
+/* Past roles are separated by hairlines; the first one (after "Earlier") isn't. */
+.tl-entry:not(.tl-entry--current) {
+  border-top: 1px solid var(--divider-color);
+}
+
+/* The first past role sits below the card with just a gap — no divider line. */
+.tl-entry--current + .tl-entry {
+  border-top: 0;
+  margin-top: 8px;
 }
 
 .tl-date {
-  /* 3px (spec says 5px) so the first line's optical centre lines up with the dot. */
-  padding-top: 3px;
-  font-size: var(--font-size-sm);
-  line-height: 1.35;
-  color: var(--text-color);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 9px;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--accent-color);
   font-variant-numeric: tabular-nums;
 }
 
-.tl-marker {
-  position: relative;
-}
-
-.tl-dot,
-.tl-dot-gap {
-  position: absolute;
-  left: var(--tl-dot-x);
-  top: 12px;
+.tl-live {
+  width: 8px;
+  height: 8px;
+  flex: none;
   border-radius: 50%;
-  transform: translate(-50%, -50%);
-}
-
-/* Punches a gap in the rail so it reads: gap · dot · gap · line */
-.tl-dot-gap {
-  width: var(--tl-dot-gap);
-  height: var(--tl-dot-gap);
-  background: var(--base-color);
-}
-
-.tl-dot {
-  width: var(--tl-dot);
-  height: var(--tl-dot);
-  background: var(--text-color);
-  opacity: 0.4;
-}
-
-.tl-dot--live {
   background: var(--tl-live);
-  opacity: 1;
+  box-shadow: 0 0 0 4px rgba(63, 185, 80, 0.16);
+}
+
+.tl-entry--current .tl-live {
   animation: tlPulse 2.4s ease-in-out infinite;
 }
 
@@ -2012,18 +2074,18 @@ display: none;}
   50%      { box-shadow: 0 0 0 9px rgba(63, 185, 80, 0.05); }
 }
 
-.tl-title-row {
+.tl-head {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 12px;
+  margin-bottom: 9px;
 }
 
 /* Brand-coloured chip holding an inlined logo mark. Colours are passed per
    company as --tl-logo-bg / --tl-logo-fg from the template. */
 .tl-logo {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   flex: none;
   display: flex;
   align-items: center;
@@ -2041,8 +2103,8 @@ display: none;}
 }
 
 .tl-logo svg {
-  width: 16px;
-  height: 16px;
+  width: 13px;
+  height: 13px;
   display: block;
 }
 
@@ -2075,10 +2137,10 @@ display: none;}
 }
 
 .tl-desc {
-  margin: 0 0 16px;
+  margin: 0 0 10px;
   max-width: none;
-  font-size: var(--font-size-base);
-  line-height: 1.65;
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
   color: var(--text-color);
   text-wrap: pretty;
 }
@@ -2099,27 +2161,11 @@ display: none;}
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tl-dot--live { animation: none; }
+  .tl-live { animation: none; }
 }
 
-/* Narrow screens: tighten the columns so the rail survives instead of stacking. */
+/* The layout is a single aligned column at every width — just tighten the padding on phones. */
 @media (max-width: 600px) {
-  .timeline {
-    --tl-date-col: 24px;
-    --tl-rail-col: 28px;
-    --tl-dot-x: 12px;
-  }
-
-  /* Not enough width for horizontal dates — rotate them into a slim column. */
-  .tl-date {
-    writing-mode: vertical-rl;
-    white-space: nowrap;
-    padding-top: 0;
-    margin-top: 2px;
-    justify-self: center;
-    line-height: 1;
-  }
-
-  .tl-entry { margin-bottom: 48px; }
-  .tl-entry:last-child { margin-bottom: 40px; }
+  .timeline { margin-top: 80px; }
+  .tl-entry { padding: 20px 18px; }
 }

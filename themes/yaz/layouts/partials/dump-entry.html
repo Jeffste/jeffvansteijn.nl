@@ -1,0 +1,32 @@
+{{/* One "dump" row. Context: a post page.
+     Optional front-matter: kind (default "writing"), image, blurb, link (external URL).
+     Behaviour by type: external → new tab (↗), photo → inline lightbox (⤢),
+     note → not a link, everything else → its own page (→). */}}
+{{ $kind := .Params.kind | default "writing" }}
+{{ $img  := .Params.image }}
+{{ $ext  := .Params.link }}
+{{ $say  := .Params.blurb | default .Title }}
+{{ $when := dateFormat "Jan 2006" .Date }}
+{{ $thumb := "" }}
+{{ with $img }}{{ $thumb = . }}{{ with resources.Get (strings.TrimPrefix "/" .) }}{{ $thumb = (.Fill "128x128 Center webp q80").RelPermalink }}{{ end }}{{ end }}
+{{ if $ext }}
+  <a class="dump-row" href="{{ $ext }}" target="_blank" rel="noopener noreferrer">
+    <div class="dump-body"><span class="dump-kind">{{ $kind }}</span><span class="dump-say">{{ $say }}<span class="dump-arrow" aria-hidden="true">↗</span></span><span class="dump-when">{{ $when }}</span></div>
+    {{ with $img }}<img class="dump-thumb" src="{{ $thumb }}" alt="" loading="lazy">{{ end }}
+  </a>
+{{ else if eq $kind "photo" }}
+  <a class="dump-row dump-row--photo" href="{{ $img }}" data-lightbox>
+    <div class="dump-body"><span class="dump-kind">{{ $kind }}</span><span class="dump-say">{{ $say }}<span class="dump-arrow" aria-hidden="true">⤢</span></span><span class="dump-when">{{ $when }}</span></div>
+    {{ with $img }}<img class="dump-thumb" src="{{ $thumb }}" alt="" loading="lazy">{{ end }}
+  </a>
+{{ else if eq $kind "note" }}
+  <div class="dump-row dump-row--note">
+    <div class="dump-body"><span class="dump-kind">{{ $kind }}</span><span class="dump-say">{{ $say }}</span><span class="dump-when">{{ $when }}</span></div>
+    {{ with $img }}<img class="dump-thumb" src="{{ $thumb }}" alt="" loading="lazy">{{ end }}
+  </div>
+{{ else }}
+  <a class="dump-row" href="{{ .Permalink }}">
+    <div class="dump-body"><span class="dump-kind">{{ $kind }}</span><span class="dump-say">{{ $say }}<span class="dump-arrow" aria-hidden="true">→</span></span><span class="dump-when">{{ $when }}</span></div>
+    {{ with $img }}<img class="dump-thumb" src="{{ $thumb }}" alt="" loading="lazy">{{ end }}
+  </a>
+{{ end }}
