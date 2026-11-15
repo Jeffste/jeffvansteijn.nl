@@ -75,19 +75,19 @@
           "date" "2022 – Today" "live" true
           "role" "Senior Product Designer at" "company" "Trengo" "url" "https://trengo.com/"
           "logo" "images/treng.svg" "logoBg" "#8557FF" "logoFg" "#FFFFFF"
-          "location" "Utrecht, The Netherlands"
+          "location" "Utrecht" "coords" "52.09° N  5.12° E"
           "desc" "Worked in an agile team to identify UX opportunities and solve product challenges through iterative design and prototyping. Improved onboarding, pricing, AI features, and SSO login, and collaborated with engineers to shape a scalable design system.")
         (dict
           "date" "2020 – 2022" "live" false
           "role" "Product Designer at" "company" "Effectory" "url" "https://effectory.com/"
           "logo" "images/effectory.svg" "logoBg" "#FFCF2B" "logoFg" "#192743"
-          "location" "Amsterdam, The Netherlands"
+          "location" "Amsterdam" "coords" "52.37° N  4.90° E"
           "desc" "Started Effectory’s Figma component library and teamed up with engineers to improve design–dev collaboration, aiming for a more scalable system. Contributed to their Employee Feedback Solutions by designing survey and reporting dashboards for small teams. Also helped grow the design team by supporting interviews and design assessments.")
         (dict
           "date" "2016 – 2020" "live" false
           "role" "Visual Designer at" "company" "Yummygum" "url" "https://yummygum.com/"
           "logo" "images/yg.svg" "logoBg" "#58C7FF" "logoFg" "#FFFFFF"
-          "location" "Amsterdam, The Netherlands"
+          "location" "Amsterdam" "coords" "52.37° N  4.90° E"
           "desc" "With the Yummygum team, I worked on a wide range of client projects—pushing creativity and quality, which laid the foundation for my design career. I learned a lot and collaborated with great clients like Spider Strategies, Employes, Hotelchamp, and FindHotel.")
       }}
       <section class="timeline">
@@ -106,10 +106,10 @@
                 </h3>
               </div>
               <p class="tl-desc">{{ .desc }}</p>
-              {{/* Pin from assets/images/location.svg, inlined with currentColor. */}}
+              {{/* City and coordinates on one line. */}}
               <div class="tl-location">
-                <svg class="icon-location" width="8" height="11" viewBox="0 0 8 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path fill-rule="evenodd" clip-rule="evenodd" d="M4 0C6.20914 0 8 1.79086 8 4C8 6.20914 5.20914 11 4 11C2.79086 11 0 6.20914 0 4C0 1.79086 1.79086 0 4 0ZM4 2C2.89543 2 2 2.89543 2 4C2 5.10457 2.89543 6 4 6C5.10457 6 6 5.10457 6 4C6 2.89543 5.10457 2 4 2Z" fill="currentColor"/></svg>
-                <span>{{ .location }}</span>
+                <span class="tl-city">{{ .location }}</span>
+                {{ with .coords }}<span class="tl-loc-sep" aria-hidden="true">·</span><span class="tl-coords">{{ . }}</span>{{ end }}
               </div>
             </li>
           {{ end }}

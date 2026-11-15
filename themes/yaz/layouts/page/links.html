@@ -38,23 +38,18 @@
 
 
 
-<!-- werkt niet -->
-<ul class="list">
+{{/* Weight ladder, bottom rung: links are one line — title left, source domain right.
+     Hovering still shows a screenshot of the page (data-preview, script below). */}}
+<ul class="ladder-list ladder--links">
   {{ $finds := where .Site.RegularPages "Section" "finds" }}
-  {{ $sorted := sort $finds "Date" "desc" }}
-  {{ range $sorted }}
-  <li class="finds-item" 
-  data-type="{{ .Params.type }}">
-  <a class="list-link" href="{{ .Params.link }}" target="_blank" rel="noopener" data-preview="{{ (print "/images/" .Params.preview) | absURL }}">
-        <span class="finds-dot dot-{{ .Params.type }}"></span>
-        <span class="list-title truncated-text ">{{ .Title }}</span>
-        <span class="list-divider"></span>
-        <time class="list-date" datetime="{{ dateFormat "2006-01-02" .Date }}">
-          {{ dateFormat "January 2, 2006" .Date }}
-        </time>
-      </a>
-    </li>
-
+  {{ range sort $finds "Date" "desc" }}
+  {{ $host := strings.TrimPrefix "www." (urls.Parse .Params.link).Host }}
+  <li class="finds-item" data-type="{{ .Params.type }}">
+    <a class="ladder-row" href="{{ .Params.link }}" target="_blank" rel="noopener" {{ with .Params.preview }}data-preview="{{ (print "/images/" .) | absURL }}"{{ end }}>
+      <span class="ladder-title">{{ .Title }}<span class="ladder-arrow" aria-hidden="true">↗</span></span>
+      <span class="ladder-domain">{{ $host }}</span>
+    </a>
+  </li>
   {{ end }}
 </ul>
 
@@ -79,7 +74,7 @@
   const previewBox = document.getElementById('finds-preview');
   const previewImage = previewBox?.querySelector('img');
 
-  document.querySelectorAll('.list-link').forEach((link) => {
+  document.querySelectorAll('[data-preview]').forEach((link) => {
     link.addEventListener('mouseenter', (e) => {
       const src = link.dataset.preview;
       if (src && previewImage) {

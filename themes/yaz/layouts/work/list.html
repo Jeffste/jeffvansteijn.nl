@@ -7,43 +7,28 @@
   <main id="main">
   <div class="content">
     {{ partial "header.html" . }}
-   
-
-
-    <section class="work-wide-list">
-      {{ .Content }}
+    {{ .Content }}
+    {{/* Weight ladder, top rung: work gets the largest image and a serif title. */}}
+    <ul class="ladder-list ladder--work">
       {{ range .Pages.ByDate.Reverse }}
-        <a href="{{ .Permalink }}" class="work-wide-link" style="--card-bg: {{ .Params.bg | default "#fff" }};">
-          <article class="work-wide">
-            <div class="work-wide-media">
-              {{ $imagePath := strings.TrimPrefix "/" .Params.image }}
-              {{ $img := resources.Get $imagePath }}
-              {{ if $img }}
-                {{ $lqip := $img.Resize "16x16 jpg q20" }}
-                <img
-                  class="work-wide-image lqip"
-                  src="{{ (printf "data:image/jpeg;base64,%s" ($lqip.Content | base64Encode)) | safeURL }}"
-                  data-src="{{ $img.RelPermalink }}"
-                  alt=""
-                />
-              {{ else }}
-                <img class="work-wide-image" src="{{ .Params.image }}" alt="" />
-              {{ end }}
-            </div>
-            <div class="work-wide-body">
-              <h3 class="work-wide-title">{{ .Title }}</h3>
-              {{ with .Params.label }}<span class="work-wide-label">{{ . }}</span>{{ end }}
-            </div>
-            <span class="work-wide-arrow" aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </span>
-          </article>
+      <li>
+        <a class="ladder-row" href="{{ .Permalink }}">
+          <span class="ladder-thumb">
+            {{ with resources.Get (strings.TrimPrefix "/" .Params.image) }}
+              {{ $thumb := .Fill "192x136 Center webp q82" }}
+              {{ $lqip := .Fill "16x12 Center jpg q20" }}
+              <img class="lqip" src="{{ (printf "data:image/jpeg;base64,%s" ($lqip.Content | base64Encode)) | safeURL }}" data-src="{{ $thumb.RelPermalink }}" alt="" width="96" height="68">
+            {{ end }}
+          </span>
+          <span class="ladder-body">
+            <span class="ladder-title">{{ .Title }}<span class="ladder-arrow" aria-hidden="true">→</span></span>
+            <span class="ladder-kicker">{{ with .Params.label }}{{ . }} · {{ end }}{{ dateFormat "2006" .Date }}</span>
+          </span>
         </a>
+      </li>
       {{ end }}
-    </section>
-    
-    
-          {{ partial "footer.html" . }}
+    </ul>
+    {{ partial "footer.html" . }}
   </div>
 </main>
 </body>

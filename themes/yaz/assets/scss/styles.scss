@@ -164,20 +164,29 @@
 /* === "Lately" dump: typed stream of notes, experiments, photos, links === */
 .dump-wrap { min-width: 0; }
 
+/* Rows bleed 12px each side so the hover tile has room; text keeps the column edge. */
 .dump-row {
   display: flex;
   gap: var(--space-4);
   align-items: center;   /* thumbnail sits on the optical centre of the kind/title/date block */
-  padding: 15px 0;
+  padding: 15px 12px;
+  margin: 0 -12px;
+  border-radius: 0;   /* rounded only while hovered, so resting hairlines stay straight */
+  border-top: 1px solid transparent;
   text-decoration: none;
   color: inherit;
+  transition: background 0.18s ease, border-color 0.18s ease;
 }
 
 .dump-row + .dump-row {
-  border-top: 1px solid var(--divider-color);
+  border-top-color: var(--divider-color);
 }
 
-a.dump-row:hover { opacity: 1; }           /* override the global a:hover fade */
+/* Hover: the tile warms; the hairlines touching it step aside. */
+a.dump-row:hover { opacity: 1; background: var(--hover-color); border-radius: 10px; }           /* also overrides the global a:hover fade */
+a.dump-row:focus-visible { border-radius: 10px; background: var(--hover-color); outline: 2px solid var(--accent-color); outline-offset: 2px; }
+a.dump-row:hover + .dump-row,
+a.dump-row:hover { border-top-color: transparent; }
 .dump-row--photo { cursor: zoom-in; }
 .dump-row--note  { cursor: default; }
 
@@ -229,8 +238,8 @@ a.dump-row:hover { opacity: 1; }           /* override the global a:hover fade *
   transition: transform 0.18s ease;
 }
 
-a.dump-row:hover .dump-say { color: var(--accent-color); }
-a.dump-row:hover .dump-arrow { opacity: 1; transform: none; color: var(--accent-color); }
+a.dump-row:hover .dump-arrow,
+a.dump-row:focus-visible .dump-arrow { opacity: 1; transform: none; color: var(--accent-color); }
 .dump-row--photo:hover .dump-thumb { transform: scale(1.04); }
 
 .dump-archive {
@@ -262,6 +271,135 @@ a.dump-row:hover .dump-arrow { opacity: 1; transform: none; color: var(--accent-
 }
 .dump-lightbox.open { display: flex; }
 .dump-lightbox img { max-width: 100%; max-height: 100%; border-radius: 12px; }
+
+/* === Weight ladder: /work/ (top rung) and /links/ (bottom rung) ===
+   Same skeleton and hover as the Lately rows (tile warms, arrow slides in);
+   work gets a big image + serif title, links collapse to one line. */
+.ladder-list {
+  list-style: none;
+  margin: var(--space-8) 0 var(--space-12);
+  padding: 0;
+  max-width: none;
+}
+
+.ladder-list li { margin: 0; }
+.ladder-list li + li { margin-top: 0; }
+
+.ladder-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: 16px 12px;
+  margin: 0 -12px;
+  border-radius: 0;   /* rounded only while hovered, so resting hairlines stay straight */
+  border-top: 1px solid transparent;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.18s ease, border-color 0.18s ease;
+}
+
+.ladder-list li + li .ladder-row { border-top-color: var(--divider-color); }
+
+a.ladder-row:hover { opacity: 1; background: var(--hover-color); border-radius: 10px; }
+a.ladder-row:focus-visible { border-radius: 10px; background: var(--hover-color); outline: 2px solid var(--accent-color); outline-offset: 2px; }
+.ladder-list li:hover .ladder-row,
+.ladder-list li:hover + li .ladder-row { border-top-color: transparent; }
+
+.ladder-body { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+
+.ladder-title {
+  color: var(--title-color);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.ladder-arrow {
+  display: inline-block;
+  margin-left: 6px;
+  font-size: 0.75rem;
+  color: var(--accent-color);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+a.ladder-row:hover .ladder-arrow,
+a.ladder-row:focus-visible .ladder-arrow { opacity: 1; transform: none; }
+
+.ladder-kicker {
+  margin-top: 6px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--accent-color);
+}
+
+/* Work: the heaviest rung */
+.ladder-thumb {
+  flex: none;
+  width: 96px;
+  height: 68px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--surface-color);
+}
+
+.ladder-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  max-height: none;
+  border-radius: 0;
+}
+
+.ladder-thumb img.lqip { filter: blur(8px); transform: scale(1.06); transition: filter 0.4s ease, transform 0.4s ease; }
+.ladder-thumb img.lqip.loaded { filter: none; transform: none; }
+
+.ladder--work .ladder-title {
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+/* Links: the lightest rung — one line, source on the right */
+.ladder--links .ladder-row {
+  align-items: baseline;
+  padding: 12px 12px;
+}
+
+.ladder--links .ladder-title {
+  flex: 1;
+  min-width: 0;
+  font-weight: 400;
+}
+
+.ladder-domain {
+  flex: none;
+  max-width: 40%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.75rem;
+  color: var(--text-color);
+  opacity: 0.62;
+}
+
+@media (max-width: 600px) {
+  .ladder-thumb { width: 76px; height: 54px; }
+  .ladder--work .ladder-title { font-size: 1rem; }
+  .ladder--links .ladder-row { flex-wrap: wrap; row-gap: 2px; }
+  .ladder-domain { max-width: none; flex-basis: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ladder-row, .ladder-arrow, .ladder-thumb img.lqip, .dump-row { transition: none; }
+  .ladder-arrow { transform: none; }
+}
 
 .writing,
 .dump {
@@ -1077,151 +1215,6 @@ footer p{
   gap: 1rem;
 }
 
-/* === WORK LIST (/work/ overview) — "M1 Quiet" ===
-   No dividers. Each row is a rounded tile that only shows on hover/focus.
-   Nested radius: tile (--radius-md 12) = thumbnail (--radius-xs 4) + padding (8). */
-.work-wide-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-  margin: 2rem 0;
-}
-
-.work-wide-link {
-  display: block;
-  text-decoration: none;
-  color: inherit;
-  border-radius: var(--radius-md);
-}
-
-// The global `a:hover { opacity: .7 }` would fade the whole row; the tile is the hover cue here.
-.work-wide-link:hover {
-  opacity: 1;
-}
-
-.work-wide-link:focus-visible {
-  outline: 2px solid var(--accent-color);
-  outline-offset: 2px;
-}
-
-.work-wide {
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
-  padding: var(--space-2);
-  border-radius: var(--radius-md);
-  background: transparent;
-  transition: background 0.2s ease;
-}
-
-.work-wide-link:hover .work-wide,
-.work-wide-link:focus-visible .work-wide {
-  background: var(--hover-color);
-}
-
-.work-wide-media {
-  flex: 0 0 72px;
-  height: 56px;
-  border-radius: var(--radius-xs);
-  overflow: hidden;
-  background: var(--surface-color);
-}
-
-.work-wide-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  max-height: none;
-  border-radius: 0;
-}
-
-.work-wide-image.lqip {
-  filter: blur(12px);
-  transform: scale(1.05);
-  transition: filter 0.4s ease, transform 0.4s ease;
-}
-
-.work-wide-image.lqip.loaded {
-  filter: none;
-  transform: scale(1);
-}
-
-.work-wide-body {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.work-wide-title {
-  font-family: var(--font-heading);
-  font-weight: 600;
-  font-size: 1.125rem;
-  line-height: 1.25;
-  letter-spacing: 0;
-  color: var(--title-color);
-  margin: 0;
-  max-width: none;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.work-wide-label {
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: var(--accent-color);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.work-wide-arrow {
-  flex: none;
-  width: 36px;
-  height: 36px;
-  border-radius: 999px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--primary-color);
-  color: var(--on-primary-color);
-  opacity: 0;
-  transform: translateX(-4px);
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-.work-wide-link:hover .work-wide-arrow,
-.work-wide-link:focus-visible .work-wide-arrow {
-  opacity: 1;
-  transform: none;
-}
-
-// Phones: titles wrap to two lines instead of truncating; the hover arrow gives up its space.
-@media (max-width: 600px) {
-  .work-wide-title {
-    white-space: normal;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-  }
-  .work-wide-arrow {
-    display: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .work-wide,
-  .work-wide-arrow { transition: none; }
-  .work-wide-arrow { transform: none; }
-}
-
-.work-wide-desc {
-  display: none;
-}
-
 /* === HERO CARDS (homepage) === */
 .hero-cards {
   display: grid;
@@ -1692,50 +1685,6 @@ svg.icon-external {
   box-shadow: none;
 }
 
-.finds-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.finds-item {
-  // margin-bottom: 6px;
-}
-
-/* De hele a-tag is klikbaar */
-.finds-item a {
-  // display: block;
-  // text-decoration: none;
-  // color: inherit;
-  // border-radius: 6px;
-  // padding: 6px 12px;
-  // transition: background-color 0.2s;
-}
-
-/* Hoverkleur – pas dit aan met SCSS variabele als je compilet */
-.finds-item a:hover {
-  // background-color: var(--hover-color); /* vervang met $color-light-hover in SCSS */
-}
-
-/* Inhoud binnen het item */
-.finds-content {
-  // display: flex;
-  // align-items: center;
-  // justify-content: space-between;
-  // gap: 8px;
-}
-
-/* Linkerkant: dot + titel */
-.finds-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-// .finds-filter span{
-//   gap: 20px;
-// }
-
 /* Dot */
 .finds-dot {
   width: 8px;
@@ -1751,13 +1700,6 @@ svg.icon-external {
 .dot-tool { background-color: #AE2012; }
 .dot-all  { background-color: gray; 
 display: none;}
-
-/* Datum rechts */
-.finds-date {
-  // font-size: 0.85rem;
-  color: var(--text-color);
-  white-space: nowrap;
-}// 
 
 /* Flex layout met content + TOC */
 .work-layout {
@@ -1847,13 +1789,6 @@ display: none;}
   opacity: 1;
   font-weight: 500;
 }
-
-.truncated-text {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
 
 // finds list preview on hover
 
@@ -2145,19 +2080,27 @@ display: none;}
   text-wrap: pretty;
 }
 
+/* "Utrecht · 52.09° N  5.12° E" — city in text colour, coordinates quieter. */
 .tl-location {
   display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: var(--font-size-sm);
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0 8px;
+  font-size: 0.8125rem;
   color: var(--text-color);
 }
 
-/* Inherits the location text colour via fill="currentColor". */
-.icon-location {
-  width: 8px;
-  height: 11px;
-  flex: none;
+.tl-loc-sep,
+.tl-coords {
+  color: var(--text-color);
+  opacity: 0.66;
+}
+
+.tl-coords {
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+  white-space: pre;   /* keep the double space between N and E, never break inside */
 }
 
 @media (prefers-reduced-motion: reduce) {
