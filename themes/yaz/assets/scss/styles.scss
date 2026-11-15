@@ -183,8 +183,8 @@
 }
 
 /* Hover: the tile warms; the hairlines touching it step aside. */
-a.dump-row:hover { opacity: 1; background: var(--hover-color); border-radius: 10px; }           /* also overrides the global a:hover fade */
-a.dump-row:focus-visible { border-radius: 10px; background: var(--hover-color); outline: 2px solid var(--accent-color); outline-offset: 2px; }
+a.dump-row:hover { opacity: 1; background: var(--hover-color); border-radius: 12px; }           /* also overrides the global a:hover fade */
+a.dump-row:focus-visible { border-radius: 12px; background: var(--hover-color); outline: 2px solid var(--accent-color); outline-offset: 2px; }
 a.dump-row:hover + .dump-row,
 a.dump-row:hover { border-top-color: transparent; }
 .dump-row--photo { cursor: zoom-in; }
@@ -231,7 +231,7 @@ a.dump-row:hover { border-top-color: transparent; }
   width: 64px;
   height: 64px;
   flex: none;
-  border-radius: 8px;
+  border-radius: 6px;   /* inner radius; hover tile is 12px (outer = 2 × inner) */
   object-fit: cover;
   background: var(--surface-color);
   display: block;
@@ -289,7 +289,7 @@ a.dump-row:focus-visible .dump-arrow { opacity: 1; transform: none; color: var(-
   display: flex;
   align-items: center;
   gap: var(--space-4);
-  padding: 16px 12px;
+  padding: 12px;   /* equal on all sides: the image sits 12px from the tile's top and left */
   margin: 0 -12px;
   border-radius: 0;   /* rounded only while hovered, so resting hairlines stay straight */
   border-top: 1px solid transparent;
@@ -300,8 +300,8 @@ a.dump-row:focus-visible .dump-arrow { opacity: 1; transform: none; color: var(-
 
 .ladder-list li + li .ladder-row { border-top-color: var(--divider-color); }
 
-a.ladder-row:hover { opacity: 1; background: var(--hover-color); border-radius: 10px; }
-a.ladder-row:focus-visible { border-radius: 10px; background: var(--hover-color); outline: 2px solid var(--accent-color); outline-offset: 2px; }
+a.ladder-row:hover { opacity: 1; background: var(--hover-color); border-radius: 12px; }
+a.ladder-row:focus-visible { border-radius: 12px; background: var(--hover-color); outline: 2px solid var(--accent-color); outline-offset: 2px; }
 .ladder-list li:hover .ladder-row,
 .ladder-list li:hover + li .ladder-row { border-top-color: transparent; }
 
@@ -338,9 +338,10 @@ a.ladder-row:focus-visible .ladder-arrow { opacity: 1; transform: none; }
 /* Work: the heaviest rung */
 .ladder-thumb {
   flex: none;
+  align-self: flex-start;   /* keep the 12px top gap even when a long title wraps taller than the image */
   width: 96px;
   height: 68px;
-  border-radius: 6px;
+  border-radius: 6px;   /* inner radius; hover tile is 12px (outer = 2 × inner) */
   overflow: hidden;
   background: var(--surface-color);
 }
@@ -369,7 +370,6 @@ a.ladder-row:focus-visible .ladder-arrow { opacity: 1; transform: none; }
 /* Links: the lightest rung — one line, source on the right */
 .ladder--links .ladder-row {
   align-items: baseline;
-  padding: 12px 12px;
 }
 
 .ladder--links .ladder-title {
