@@ -50,6 +50,14 @@
   --border-color: #{$color-light-border};
   --hover-color: #{$color-light-hover};
   --card-color: #{$color-light-card};
+  --type-read: #{$color-light-type-read};
+  --type-video: #{$color-light-type-video};
+  --type-site: #{$color-light-type-site};
+  --type-tool: #{$color-light-type-tool};
+  --type-read-on: #{$color-dark-type-read};
+  --type-video-on: #{$color-dark-type-video};
+  --type-site-on: #{$color-dark-type-site};
+  --type-tool-on: #{$color-dark-type-tool};
   --header-glass: rgba(247, 245, 239, 0.72);  // base @ 72%, for the frosted nav pill
   --beneath: #16301f;                          // forest "under" the paper, seen on overscroll
   --on-beneath: rgba(247, 245, 239, 0.72);
@@ -68,6 +76,14 @@
   --border-color: #{$color-dark-border};
   --hover-color: #{$color-dark-hover};
   --card-color: #{$color-dark-card};
+  --type-read: #{$color-dark-type-read};
+  --type-video: #{$color-dark-type-video};
+  --type-site: #{$color-dark-type-site};
+  --type-tool: #{$color-dark-type-tool};
+  --type-read-on: #{$color-light-type-read};
+  --type-video-on: #{$color-light-type-video};
+  --type-site-on: #8A671E;
+  --type-tool-on: #{$color-light-type-tool};
   --header-glass: rgba(14, 20, 17, 0.68);  // base @ 68%, for the frosted nav pill
   --beneath: #16271d;                      // forest "under" the paper, seen on overscroll
   --on-beneath: rgba(242, 241, 236, 0.62);
@@ -378,6 +394,14 @@ a.ladder-row:focus-visible .ladder-arrow { opacity: 1; transform: none; }
   font-weight: 400;
 }
 
+/* Type dot (same colours as the filter), centred on the title's first line. */
+.ladder--links .ladder-row { gap: 12px; }
+.ladder--links .ladder-domain { margin-left: 4px; }
+.ladder-dot {
+  align-self: flex-start;
+  margin-top: calc((var(--font-size-sm) * 1.4 - 7px) / 2);
+}
+
 .ladder-domain {
   flex: none;
   max-width: 40%;
@@ -393,7 +417,10 @@ a.ladder-row:focus-visible .ladder-arrow { opacity: 1; transform: none; }
   .ladder-thumb { width: 76px; height: 54px; }
   .ladder--work .ladder-title { font-size: 1rem; }
   .ladder--links .ladder-row { flex-wrap: wrap; row-gap: 2px; }
-  .ladder-domain { max-width: none; flex-basis: 100%; }
+  /* domain drops under the title, aligned with it (7px dot + 12px gap) */
+  .ladder--links .ladder-domain { max-width: none; flex-basis: calc(100% - 19px); margin-left: 19px; }
+  /* no hover on touch, and the hidden arrow could wrap onto an empty line */
+  .ladder--links .ladder-arrow { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1687,19 +1714,28 @@ svg.icon-external {
 
 /* Dot */
 .finds-dot {
-  width: 8px;
-  height: 8px;
-  min-width: 8px;
+  width: 7px;
+  height: 7px;
+  min-width: 7px;
   border-radius: 50%;
   display: inline-block;
+  background-color: var(--accent-color);
 }
 
-.dot-video { background-color: #005F73; }
-.dot-read { background-color: #94D2BD; }
-.dot-site { background-color: #EE9B00; }
-.dot-tool { background-color: #AE2012; }
-.dot-all  { background-color: gray; 
-display: none;}
+/* One muted earth tone per link type, from the palette (see variables.scss). */
+.dot-read  { background-color: var(--type-read); }
+.dot-video { background-color: var(--type-video); }
+.dot-site  { background-color: var(--type-site); }
+.dot-tool  { background-color: var(--type-tool); }
+
+/* On the selected (forest-filled) filter the dot keeps its type colour, in the tone that
+   reads on that fill: the light tone on dark forest, the deep tone on pale green (≥3:1). */
+.finds-filter.active .dot-read  { background-color: var(--type-read-on); }
+.finds-filter.active .dot-video { background-color: var(--type-video-on); }
+.finds-filter.active .dot-site  { background-color: var(--type-site-on); }
+.finds-filter.active .dot-tool  { background-color: var(--type-tool-on); }
+
+.dot-all { display: none; }
 
 /* Flex layout met content + TOC */
 .work-layout {

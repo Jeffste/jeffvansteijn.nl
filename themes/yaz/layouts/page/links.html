@@ -46,6 +46,7 @@
   {{ $host := strings.TrimPrefix "www." (urls.Parse .Params.link).Host }}
   <li class="finds-item" data-type="{{ .Params.type }}">
     <a class="ladder-row" href="{{ .Params.link }}" target="_blank" rel="noopener" {{ with .Params.preview }}data-preview="{{ (print "/images/" .) | absURL }}"{{ end }}>
+      <span class="finds-dot ladder-dot dot-{{ .Params.type }}" title="{{ .Params.type }}" aria-hidden="true"></span>
       <span class="ladder-title">{{ .Title }}<span class="ladder-arrow" aria-hidden="true">↗</span></span>
       <span class="ladder-domain">{{ $host }}</span>
     </a>

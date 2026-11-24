@@ -15,6 +15,12 @@ $color-light-border: #D8CFBD;        // secondary button outline (warm)
 $color-light-hover: rgba(20, 26, 22, 0.035);    // translucent ink: darkens whatever is below, incl. the noise texture
 $color-light-card: #FFFFFF;
 
+// Link types (Finds filter): muted earth tones that sit with the forest + paper palette.
+$color-light-type-read:  #2F6B4C;     // forest (= accent)
+$color-light-type-video: #A85C40;     // clay
+$color-light-type-site:  #9A7322;     // ochre
+$color-light-type-tool:  #4A6B7C;     // slate
+
 // Dark theme
 $color-dark-base: #0E1411;
 $color-dark-surface: #17201B;
@@ -28,3 +34,8 @@ $color-dark-divider: #233029;
 $color-dark-border: #34433A;
 $color-dark-hover: rgba(242, 241, 236, 0.045);  // translucent light on dark
 $color-dark-card: #131B17;
+
+$color-dark-type-read:  #7FB894;
+$color-dark-type-video: #D9917A;
+$color-dark-type-site:  #D2AD5C;
+$color-dark-type-tool:  #8FB3C4;
